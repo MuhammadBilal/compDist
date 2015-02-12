@@ -1,0 +1,2 @@
+# compDist
+Prácticas Computación Distribuida
