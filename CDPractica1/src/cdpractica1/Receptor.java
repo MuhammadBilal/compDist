@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.ArrayList;
 
 public class Receptor extends Thread{
     
@@ -16,15 +15,12 @@ public class Receptor extends Thread{
     
     private InetAddress grupo;
     private MulticastSocket socket;
-    
-    private ArrayList<String> mensajes;
+
     
     public Receptor(int puerto, String nombreGrupo, Aplicacion app){
         this.puerto = puerto;
         this.nombreGrupo = nombreGrupo;
         this.app = app;
-        
-        this.mensajes = new ArrayList();
     }
     
     public void run(){
@@ -44,29 +40,24 @@ public class Receptor extends Thread{
                 DatagramPacket mEntrada = new DatagramPacket(buffer, buffer.length);
                 
                 socket.receive(mEntrada);
-                //String ip = mEntrada.getAddress().getHostAddress();
+                String m2 = mEntrada.getAddress().getHostAddress(); //obtiene la direccion del emisor
                 String msg = new String(mEntrada.getData());
                 
-                // ip += ": "+msg;
+                m2 += ": "+msg;
                 
-                //System.out.println("Recibido: "+msg);   //..
+                System.out.println("Recibido: "+m2);   //..
                 
-                //this.mensajes.add(msg);
-                app.areaChat.append("\n"+msg);
+                app.areaChat.append(m2+"\n");
             }
             
             //socket.leaveGroup(grupo);
         }catch(IOException e){
             System.out.println("Error recepcion: "+e.getMessage());
-            app.areaChat.append("Error reception: "+e.getMessage());
+            app.areaChat.append("Error recepcion: "+e.getMessage());
         }finally{
             if(socket != null){ socket.close(); }
         }
         
     }
-    
-    public ArrayList<String> getMensajes(){
-        return this.mensajes;
-    }
-    
+
 }

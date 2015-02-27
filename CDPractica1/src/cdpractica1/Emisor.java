@@ -25,10 +25,6 @@ public class Emisor extends Thread{
             this.grupo = InetAddress.getByName(nombreGrupo);
             this.socket = new MulticastSocket(puerto);
             
-            String ip = InetAddress.getLocalHost().getHostAddress();
-            
-            ip += ": "+msg;
-            
             byte[] m = msg.getBytes();
             
             socket.joinGroup(grupo);

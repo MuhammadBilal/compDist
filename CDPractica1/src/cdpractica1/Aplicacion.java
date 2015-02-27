@@ -19,8 +19,6 @@ public class Aplicacion extends javax.swing.JFrame {
         this.receptor = new Receptor(PUERTO, GRUPO, this);
         
         receptor.start();
-        
-        //comprobar si el mensaje que se envia entra en el chat, si no añadirlo desde la clase emisor, llamando a la app
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +31,7 @@ public class Aplicacion extends javax.swing.JFrame {
         btnEnviar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Chat Multicast");
 
         areaChat.setColumns(20);
         areaChat.setRows(5);
