@@ -28,7 +28,7 @@ public class Receptor extends Thread{
     }
     
     public void recibirMensajes(){
-        byte[] buffer = new byte[10000];
+        
         
         try{
             this.grupo = InetAddress.getByName(nombreGrupo);
@@ -37,10 +37,11 @@ public class Receptor extends Thread{
             socket.joinGroup(grupo);
             
             while(true){
+                byte[] buffer = new byte[10000];
                 DatagramPacket mEntrada = new DatagramPacket(buffer, buffer.length);
                 
                 socket.receive(mEntrada);
-                String m2 = mEntrada.getAddress().getHostAddress(); //obtiene la direccion del emisor
+                String m2 = new String(mEntrada.getAddress().getHostAddress()); //obtiene la direccion del emisor
                 String msg = new String(mEntrada.getData());
                 
                 m2 += ": "+msg;
