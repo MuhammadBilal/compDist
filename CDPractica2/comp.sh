@@ -33,5 +33,7 @@ mv ServerInterface.class server/
 mv ServerImpl.class server/
 mv ClientImpl_Stub.class server/
 
+mv *.class client/
+
 echo " ---------- COMPILADO -----------"
 exit 0

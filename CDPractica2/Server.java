@@ -19,11 +19,8 @@ public class Server  {
 
     InputStreamReader is = new InputStreamReader(System.in);
     BufferedReader br = new BufferedReader(is);
-    //String portNum; 
     String registryURL;
     try{     
-      //System.out.println("Enter the RMIregistry port number:");
-      //portNum = (br.readLine()).trim();
       int RMIPortNum = Integer.parseInt(portNum);
       startRegistry(RMIPortNum);
       ServerImpl exportedObj = new ServerImpl();
@@ -34,8 +31,7 @@ public class Server  {
      
       while(true){
          Thread.sleep(500);
-         exportedObj.readNumber();
-         //System.out.println("num: "+Math.random());
+         exportedObj.generateNumber();
       }
 
     } catch (Exception re) {

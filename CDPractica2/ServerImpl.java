@@ -19,64 +19,52 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
       return("hello");
    }
 
-   public void readNumber() throws java.rmi.RemoteException{
+   public void generateNumber() throws java.rmi.RemoteException{
       double x = Math.random();
-      System.out.println("number: "+x);
+      System.out.println("random: "+x);
       doCallbacks(""+x);
    }
 
-  public synchronized void registerForCallback(ClientInterface callbackClientObject, int time) throws java.rmi.RemoteException{
+  public synchronized void registerForCallback(ClientInterface callbackClientObject, Integer time) throws java.rmi.RemoteException{
       // store the callback object into the vector
       if (!(clientList.contains(callbackClientObject))) {
          clientList.addElement(callbackClientObject);
-         clients.put(callbackClientObject, time*2);
+         clients.put(callbackClientObject, time*2);   // 2Hz = 0.5 sec.
          System.out.println("Registered new client ");
          
-         
-         //doCallbacks();
-    } // end if
+    } 
   }  
 
-// This remote method allows an object client to 
-// cancel its registration for callback
-// @param id is an ID for the client; to be used by
-// the server to uniquely identify the registered client.
   public synchronized void unregisterForCallback(ClientInterface callbackClientObject) throws java.rmi.RemoteException{
     if (clientList.removeElement(callbackClientObject)) {
       System.out.println("Unregistered client ");
       clients.remove(callbackClientObject);
+      callbackClientObject.notifyEnd("Finalizada suscripcion");
     } else {
-       System.out.println("unregister: clientwasn't registered.");
+       System.out.println("unregister: client wasn't registered.");
     }
   } 
 
   private synchronized void doCallbacks(String number) throws java.rmi.RemoteException{
-    // make callback to each registered client
-    //System.out.println("**************************************\n"+ "Callbacks initiated ---");
 
        for (int i = 0; i < clientList.size(); i++){
            
-         // convert the vector object to a callback object
          ClientInterface nextClient = (ClientInterface)clientList.elementAt(i);
          int t = clients.get(nextClient);
          if(t > 0){
-            System.out.println("doing "+ i +"-th callback\n"); 
+            System.out.println("doing callback to client #"+ i +"\n"); 
             t--;
             clients.remove(nextClient);
             clients.put(nextClient, t);
-            nextClient.notifyMe("num: "+number);
-            
+            nextClient.notifyMe(" "+number);
         
          }else{
             unregisterForCallback(nextClient);
+            //nextClient.notifyEnd("Finalizada suscripcion");
          }
-         // invoke the callback method
-         // - nextClient.notifyMe("Number of registered clients="+  clientList.size());
-         //nextClient.notifyMe("num: "+number);
-       }// end for
+       }
       
 
-    //System.out.println("********************************\n"+"Server completed callbacks ---");
-  } // doCallbacks
+  }
 
 }
