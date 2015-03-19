@@ -1,7 +1,6 @@
 ## TODO
 
  - Servidor multiples clientes
- - Base de datos clientes y grupos
  - Grupo de amigos de cada cliente
  - Notificar al grupo del conectado
  - Enviar al cliente la lista de amigos conectados
@@ -17,3 +16,5 @@
  - Login / logout
 
 ## DONE
+
+ - Base de datos clientes y grupos
