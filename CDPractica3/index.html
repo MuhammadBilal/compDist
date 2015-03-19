@@ -3,8 +3,48 @@
 <head>
     <meta charset="utf-8"/>
     <title>MeteøChat</title>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular&subset=Latin,Cyrillic">
+    <style type='text/css'>
+        body {
+            margin: 0px;
+            font-family: Ubuntu, Helvetica, Arial, sans-serif;
+            background-image: url('img/fondo.jpg');
+        }
+
+        form#formulario_inicio {
+            text-align: center;
+        }
+
+        form input {
+            width: 200px;
+        }
+
+        #barra {
+            width: 100%;
+            padding-top: 2em;
+            padding-bottom: 2em;
+            background-image: -webkit-gradient(linear, center top, center bottom, from(rgba(0,0,0,1)), to(rgba(255,255,255,0)));
+            opacity: 0.75;
+        }
+
+        #logo {
+            display: inline;
+        }
+    </style>
 </head>
 <body>
-    <h1>MeteøChat</h1>
+    <center>
+        <div id='barra'>
+            <img src='img/logo.png' id='logo'/>
+        </div>
+        <br>
+        <div id="contenido">
+            <form id="formulario_inicio">
+                <input type="text" name="user" value="Usuario" onclick="this.value=''"/>
+                <br/><br/>
+                <input type="password" name="password" value="Contraseña"  onclick="this.value=''"/>
+            </form>
+        </div>
+    </center>
 </body>
 </html>
