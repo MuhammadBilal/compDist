@@ -1,3 +1,4 @@
+package model;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,11 @@ public class Client {
 
    // Constructors
    public Client(){
+      this.friends = new ArrayList<Client>();
+   }
+
+   public Client(String name){
+      this.name = name;
       this.friends = new ArrayList<Client>();
    }
 
