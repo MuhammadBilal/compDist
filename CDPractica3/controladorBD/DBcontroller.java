@@ -1,11 +1,11 @@
 
 // @author: Pablo Varela
 // 
-// Database controller
+// Database controller for mysql
 
 import java.sql.*;
 
-public class DBcontroller {
+public class DBController {
     private final String controlador = "com.mysql.jdbc.Driver";
     private final String ip = "localhost";
     private final String port = "3306";
@@ -16,7 +16,7 @@ public class DBcontroller {
     private Connection connection;
 
     // Constructor
-    public DBcontroller() {
+    public DBController() {
         if ( checkDriver() ) {
             openConnection();
             return;
