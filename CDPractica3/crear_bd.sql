@@ -1,15 +1,15 @@
-CREATE DATABASE meteochatbd;
+-- CREATE DATABASE meteochatbd;
 USE meteochatbd;
 
-CREATE USER 'adminmeteo'@'localhost' IDENTIFIED BY '1234';
-GRANT ALL PRIVILEGES ON meteochatbd. * TO 'adminmeteo'@'localhost';
-FLUSH PRIVILEGES;
+-- CREATE USER 'adminmeteo'@'localhost' IDENTIFIED BY '1234';
+-- GRANT ALL PRIVILEGES ON meteochatbd. * TO 'adminmeteo'@'localhost';
+-- FLUSH PRIVILEGES;
 
 CREATE TABLE clients (
    name VARCHAR(64) NOT NULL,
    email VARCHAR(64) NOT NULL UNIQUE,
-   pass VARCHAR(512) NOT NULL
-   date DATETIME NOT NULL,
+   pass VARCHAR(512) NOT NULL,
+   date datetime NOT NULL,
    PRIMARY KEY (name)
 );
 
