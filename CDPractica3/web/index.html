@@ -39,10 +39,12 @@
         </div>
         <br>
         <div id="contenido">
-            <form id="formulario_inicio">
+            <form id="login_form" method="post" action="/meteochat/Controller">
                 <input type="text" name="user" value="Usuario" onclick="this.value=''"/>
                 <br/><br/>
                 <input type="password" name="password" value="Contraseña"  onclick="this.value=''"/>
+                <br/><br/>
+                <input type="submit" value="Login" name="login_action"/>
             </form>
         </div>
     </center>
