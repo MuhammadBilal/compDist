@@ -141,7 +141,29 @@ public class DAOImpl implements DAOInt {
    }
 
    public void changeClientPass(String clientName, String pass){
-   
+      Connection con = null;
+      Statement stm = null;
+
+      try{
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+         
+         stm = con.createStatement();
+
+         boolean result = stm.execut("UPDATE clients SET pass='"+pass+"' WHERE name='"+clientName+"';");
+
+         //if(!result){}
+
+         con.commit();
+      }catch(SQLException e){
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
    }
 
    public boolean checkPass(Client client, String pass){ // polymorph
