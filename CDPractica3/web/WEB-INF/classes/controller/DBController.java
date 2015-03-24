@@ -3,6 +3,8 @@
 // 
 // Database controller for mysql
 
+package controller;
+
 import java.sql.*;
 
 public class DBController {
@@ -34,9 +36,14 @@ public class DBController {
             return false;
         }
     }
+
+    // Get the connection object
+    public Connection getConnection() {
+        return this.connection;
+    }
     
     // Initialize the connection with the database
-    private void openConnection() {
+    public void openConnection() {
         try {
              connection = DriverManager.getConnection(URL_DB, username, password);
         } catch (Exception ex) {
@@ -45,7 +52,7 @@ public class DBController {
     }
 
     // Close connection with the DB
-    private void closeConnection() {
+    public void closeConnection() {
         try {
             connection.close();
         } catch (Exception ex) {

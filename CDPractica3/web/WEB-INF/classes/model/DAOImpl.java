@@ -6,9 +6,9 @@ import java.sql.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import controller.*;
+import controller.DBController;
 
-public class DAOImpl implements DAOint {
+public class DAOImpl implements DAOInt {
 
    private DBController controller;
 
@@ -36,7 +36,7 @@ public class DAOImpl implements DAOint {
       Client friend;
 
       try{
-         con = controller.openConnection();
+         con = controller.getConnection();
          con.setAutoCommit(false);
          stm = con.createStatement();
 
@@ -59,6 +59,8 @@ public class DAOImpl implements DAOint {
             System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
          }
       }
+
+      return friends;
    }
 
    public void newClient(Client client){
@@ -73,7 +75,7 @@ public class DAOImpl implements DAOint {
       String date = sdf.format(dt);
 
       try{
-         con = controller.openConnection();
+         con = controller.getConnection();
          con.setAutoCommit(false);
 
          stm = con.createStatement();
@@ -112,7 +114,7 @@ public class DAOImpl implements DAOint {
       Statement stm = null;
 
       try{
-         con = controller.openConnection();
+         con = controller.getConnection();
          con.setAutoCommit(false);
 
          stm = con.createStatement();
@@ -147,6 +149,6 @@ public class DAOImpl implements DAOint {
    }
 
    public boolean checkPass(String clientName, String pass){
-
+      return true; // ------------------------ Implementar
    }
 }
