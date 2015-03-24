@@ -13,17 +13,24 @@ public class Controller extends HttpServlet {
         
         // Login request
 		if (request.getParameter("login_action") != null) {
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-            
-            out.println("ola k ase " + request.getParameter("user") + " loco.");
-		}
+            mostrarPaginaError("Aun no está implementado :(", session, request, response);
+		} 
+
+        // Register request
+        else if (request.getParameter("register_action") != null) {
+            mostrarPaginaError("Aun no está implementado :(", session, request, response);
+        }
     }
 
     private void gotoPage (String address, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
     	dispatcher.forward(request, response);
     	return;
+    }
+
+    private void mostrarPaginaError (String error, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        session.setAttribute("error", error);
+        gotoPage("/error.jsp", request, response); // Imprimo el error en una pagina
     }
 
 }

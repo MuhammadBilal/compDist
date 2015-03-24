@@ -150,7 +150,7 @@ public class DAOImpl implements DAOInt {
          
          stm = con.createStatement();
 
-         boolean result = stm.execut("UPDATE clients SET pass='"+pass+"' WHERE name='"+clientName+"';");
+         boolean result = stm.execute("UPDATE clients SET pass='"+pass+"' WHERE name='"+clientName+"';");
 
          //if(!result){}
 

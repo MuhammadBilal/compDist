@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+        <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+        
     <meta charset="utf-8"/>
     <title>MeteøChat</title>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular&subset=Latin,Cyrillic">
@@ -27,18 +29,10 @@
             display: inline;
         }
 
-        #register_button {
-            background-color: white;
-            opacity: 0.7;
-            width: 220px;
-            padding: 10px;
-            border-radius: 3px;
+        #contenido p {
+            color: #cc5555
         }
 
-        #register_button a {
-            font-size: 20px;
-            text-decoration: none;
-        }
     </style>
 </head>
 <body>
@@ -48,17 +42,7 @@
         </div>
         <br>
         <div id="contenido">
-            <form id="login_form" method="post" action="/meteochat/Controller">
-                <input type="text" name="user" value="Usuario" onclick="this.value=''"/>
-                <br/><br/>
-                <input type="password" name="password" value="Contraseña"  onclick="this.value=''"/>
-                <br/><br/>
-                <input type="submit" value="Login" name="login_action"/>
-            </form>
-            <br/><br/><br/><br/>
-            <div id="register_button">
-                <a href="register.html">Registrar nuevo usuario</a>
-            </div>
+            <center><p> ${sessionScope.error} </p></center>
         </div>
     </center>
 </body>
