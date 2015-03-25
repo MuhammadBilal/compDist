@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.sql.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.security.MessageDigest;
+import javax.xml.bind.DatatypeConverter;
 
 import controller.*;
 
@@ -63,13 +65,48 @@ public class DAOImpl implements DAOInt {
       return friends;
    }
 
+   public Client getClient(String clientName){
+      
+      Client resultClient = new Client();
+      Connection con = null;
+      Statement stm = null;
+
+      try{
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+         stm = con.createStatement();
+
+         ResultSet rs = stm.executeQuery("SELECT client FROM clients WHERE name ='"+clientName+"';");
+
+         if (rs.next()) {
+            resultClient.setName(clientName);
+            resultClient.setEmail(rs.getString("email"));
+            resultClient.setPassword(rs.getString("pass"));
+            resultClient.setDate(rs.getString("date"));
+         }
+
+         con.commit();
+      }catch(SQLException e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
+
+      return resultClient;
+   }
+
    public void newClient(Client client){
       Connection con = null;
       Statement stm = null;
 
       String name = client.getName();
       String email = client.getEmail();
-      String pass = client.getPassword();
+      String pass = getHash(client.getPassword());
       Date dt = new Date();
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String date = sdf.format(dt);
@@ -144,6 +181,8 @@ public class DAOImpl implements DAOInt {
       Connection con = null;
       Statement stm = null;
 
+      pass = getHash(pass); // sha512 of the string
+
       try{
          con = controller.getConnection();
          con.setAutoCommit(false);
@@ -171,6 +210,31 @@ public class DAOImpl implements DAOInt {
    }
 
    public boolean checkPass(String clientName, String pass){
-      return true; // ------------------------ Implementar
+      Client client = null;
+      client = getClient(clientName);
+
+      if (client == null || clientName == null) return false;
+
+      pass = getHash(pass); // sha512 digest
+
+      if (client.getPassword().equals(pass)) return true;
+      return false;
+   }
+
+   private String getHash(String str) {
+
+      String hash = new String();
+
+      try {
+
+         hash = DatatypeConverter.printHexBinary( MessageDigest.getInstance("SHA-512").digest(str.getBytes("UTF-8")));
+
+      } catch (Exception ex) {
+         System.out.println(ex);
+
+         return "null";
+      }
+        
+      return hash;
    }
 }

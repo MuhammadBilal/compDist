@@ -17,11 +17,17 @@ public class Controller extends HttpServlet {
         // Login request
 		if (request.getParameter("login_action") != null) {
 
-            // BORRAR: inicio de sesion virtual
-            session.setAttribute("username", request.getParameter("user"));
-            gotoPage("/perfil.jsp", request, response);
+            String username = request.getParameter("user");
+            String password = request.getParameter("password");
 
-            //mostrarPaginaError("Aun no está implementado :(", session, request, response);
+            if (username != null && password != null) {
+                if (DAO.checkPass(username, password)) {
+                    session.setAttribute("username", username);
+                    gotoPage("/perfil.jsp", request, response);
+                } else {
+                    mostrarPaginaError("No se ha podido iniciar sesión", session, request, response);
+                }
+            }
 		} 
 
         // Register request
