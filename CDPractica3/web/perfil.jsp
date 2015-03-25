@@ -66,7 +66,7 @@
                 </form>
                 <div id="separador"></div>
                 <form id="delete_account_form" method="post" action="/meteochat/Controller">
-                    <input type="submit" value="Delete Account" name="delete_account_action" style="background-color: #cc3333;">
+                    <input type="submit" value="Delete Account" name="delete_account_action" style="background-color: #cc3333; color: white">
                 </form>
             </div>
         </center>

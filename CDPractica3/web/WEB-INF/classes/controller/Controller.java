@@ -12,7 +12,7 @@ public class Controller extends HttpServlet {
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         HttpSession session = request.getSession(true);
-        DAOInt DAO = (DAOInt) new DAOImpl();
+        DAOImpl DAO = new DAOImpl();
         
         // Login request
 		if (request.getParameter("login_action") != null) {

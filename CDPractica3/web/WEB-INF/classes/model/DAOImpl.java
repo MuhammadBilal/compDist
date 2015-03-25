@@ -85,7 +85,7 @@ public class DAOImpl implements DAOInt {
          if(!rs.first()){
             boolean result;
             result = stm.execute("INSERT INTO clients (name, email, pass, date) VALUES('"
-               +name+"','"+email+"','"+pass+"','"+"',"+date+");");
+               +name+"','"+email+"','"+pass+"','"+date+"');");
             //if(result){}
 
          }else{
