@@ -16,16 +16,26 @@ public class Controller extends HttpServlet {
         
         // Login request
 		if (request.getParameter("login_action") != null) {
-            mostrarPaginaError("Aun no está implementado :(", session, request, response);
+
+            // BORRAR: inicio de sesion virtual
+            session.setAttribute("username", request.getParameter("user"));
+            gotoPage("/perfil.jsp", request, response);
+
+            //mostrarPaginaError("Aun no está implementado :(", session, request, response);
 		} 
 
         // Register request
         else if (request.getParameter("register_action") != null) {
-            // try {
-            //     Client nuevoCliente = new Client(request.getParameter("user"),"prueba@mail.com",request.getParameter("password1"));
-            // } catch (Exception ex) {
-            //     mostrarPaginaError("Error:\n"+ex.getMessage(), session, request, response);
-            // }
+            mostrarPaginaError("Aun no está implementado :(", session, request, response);
+        }
+
+        // Change password request
+        else if (request.getParameter("change_password_action") != null) {
+            mostrarPaginaError("Aun no está implementado :(", session, request, response);
+        }
+
+        // Delete account request
+        else if (request.getParameter("delete_account_action") != null) {
             mostrarPaginaError("Aun no está implementado :(", session, request, response);
         }
     }
