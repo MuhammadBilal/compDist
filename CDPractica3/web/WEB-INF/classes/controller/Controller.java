@@ -5,11 +5,14 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 
+import model.*; // DAO
+
 public class Controller extends HttpServlet {
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         HttpSession session = request.getSession(true);
+        DAOInt DAO = (DAOInt) new DAOImpl();
         
         // Login request
 		if (request.getParameter("login_action") != null) {
@@ -18,6 +21,11 @@ public class Controller extends HttpServlet {
 
         // Register request
         else if (request.getParameter("register_action") != null) {
+            // try {
+            //     Client nuevoCliente = new Client(request.getParameter("user"),"prueba@mail.com",request.getParameter("password1"));
+            // } catch (Exception ex) {
+            //     mostrarPaginaError("Error:\n"+ex.getMessage(), session, request, response);
+            // }
             mostrarPaginaError("Aun no está implementado :(", session, request, response);
         }
     }

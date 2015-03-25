@@ -1,6 +1,0 @@
-Using CATALINA_BASE:   /Library/Tomcat
-Using CATALINA_HOME:   /Library/Tomcat
-Using CATALINA_TMPDIR: /Library/Tomcat/temp
-Using JRE_HOME:        /Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home
-Using CLASSPATH:       /Library/Tomcat/bin/bootstrap.jar:/Library/Tomcat/bin/tomcat-juli.jar
-Tomcat started.

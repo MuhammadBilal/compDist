@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import controller.DBController;
+import controller.*;
 
 public class DAOImpl implements DAOInt {
 

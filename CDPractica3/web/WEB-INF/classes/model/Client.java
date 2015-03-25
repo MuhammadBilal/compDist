@@ -20,6 +20,13 @@ public class Client {
       this.friends = new ArrayList<Client>();
    }
 
+   public Client(String name, String email, String password) {
+      this.name = name;
+      this.email = email;
+      this.password = password;
+      this.friends = new ArrayList<Client>();
+   }
+
    public Client(String name, String email, String password, String date){
       this.name = name;
       this.email = email;
