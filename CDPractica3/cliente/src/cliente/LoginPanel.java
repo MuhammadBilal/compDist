@@ -145,7 +145,12 @@ public class LoginPanel extends javax.swing.JPanel {
                 
                 this.app.setContentPane(new ListPanel(this.app));
                 this.app.invalidate();
-                this.app.validate();    
+                this.app.validate();   
+                
+                ChatFrame c = new ChatFrame();
+                c.setAlwaysOnTop(true);
+                c.setVisible(true);
+                
             }else{
                 labelError.setText("El nombre de usuario y/o la contraseña son incorrectos");
             }
