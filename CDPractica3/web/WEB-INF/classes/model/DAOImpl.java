@@ -76,13 +76,15 @@ public class DAOImpl implements DAOInt {
          con.setAutoCommit(false);
          stm = con.createStatement();
 
-         ResultSet rs = stm.executeQuery("SELECT client FROM clients WHERE name ='"+clientName+"';");
+         ResultSet rs = stm.executeQuery("SELECT * FROM clients WHERE name ='"+clientName+"';");
 
          if (rs.next()) {
             resultClient.setName(clientName);
             resultClient.setEmail(rs.getString("email"));
             resultClient.setPassword(rs.getString("pass"));
             resultClient.setDate(rs.getString("date"));
+         } else {
+            return null;
          }
 
          con.commit();
@@ -151,6 +153,7 @@ public class DAOImpl implements DAOInt {
       Statement stm = null;
 
       try{
+         controller = new DBController();
          con = controller.getConnection();
          con.setAutoCommit(false);
 
@@ -184,17 +187,19 @@ public class DAOImpl implements DAOInt {
       pass = getHash(pass); // sha512 of the string
 
       try{
+         controller = new DBController();
          con = controller.getConnection();
          con.setAutoCommit(false);
-         
+
          stm = con.createStatement();
 
-         boolean result = stm.execute("UPDATE clients SET pass='"+pass+"' WHERE name='"+clientName+"';");
+         int result = stm.executeUpdate("UPDATE clients SET pass='"+pass+"' WHERE name='"+clientName+"';");
 
          //if(!result){}
-
          con.commit();
-      }catch(SQLException e){
+
+      }catch(Exception e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
       }finally{
          try{
             stm.close();
@@ -213,11 +218,12 @@ public class DAOImpl implements DAOInt {
       Client client = null;
       client = getClient(clientName);
 
-      if (client == null || clientName == null) return false;
+      if (client == null || clientName == null) return false;
 
       pass = getHash(pass); // sha512 digest
 
       if (client.getPassword().equals(pass)) return true;
+
       return false;
    }
 
@@ -232,7 +238,7 @@ public class DAOImpl implements DAOInt {
       } catch (Exception ex) {
          System.out.println(ex);
 
-         return "null";
+         return null;
       }
         
       return hash;

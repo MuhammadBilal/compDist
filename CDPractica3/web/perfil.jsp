@@ -61,12 +61,16 @@
                     <br/><br/>
                     <input type="password" name="password2" value="Contraseña"  onclick="this.value=''"/>
                     <br/><br/>
-
                     <input type="submit" value="Change password" name="change_password_action"/>
+                    <p style="color: #dda500"> ${sessionScope.mensaje} </p>
                 </form>
                 <div id="separador"></div>
                 <form id="delete_account_form" method="post" action="/meteochat/Controller">
-                    <input type="submit" value="Delete Account" name="delete_account_action" style="background-color: #cc3333; color: white">
+                    <label>Contraseña</label>
+                    <br><br>
+                    <input type="password" name="password" value="Contraseña" onclick="this.value=''"/>
+                    <br><br>
+                    <input type="submit" value="Delete Account" name="delete_account_action" style="background-color: #cc3333; color: white; border-radius: 5px; margin-bottom: 20px;">
                 </form>
             </div>
         </center>

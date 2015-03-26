@@ -26,6 +26,10 @@
         #logo {
             display: inline;
         }
+
+        #contenido {
+            color: #44cc55;
+        }
     </style>
 </head>
 <body>
@@ -36,10 +40,20 @@
         <br>
         <div id="contenido">
             <form id="register_form" method="post" action="/meteochat/Controller">
+                <label> Usuario </label>
+                <br><br>
                 <input type="text" name="user" value="Usuario" onclick="this.value=''"/>
                 <br/><br/>
+                <label> Email </label>
+                <br><br>
+                <input type="email" name="email" value="user@domain.com" onclick="this.value=''"/>
+                <br/><br/>
+                <label> Contraseña </label>
+                <br><br>
                 <input type="password" name="password1" value="Contraseña"  onclick="this.value=''"/>
                 <br/><br/>
+                <label> Repite la contraseña </label>
+                <br><br>
                 <input type="password" name="password2" value="Contraseña"  onclick="this.value=''"/>
                 <br/><br/>
                 <input type="submit" value="Register" name="register_action"/>
