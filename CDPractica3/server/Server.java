@@ -29,10 +29,6 @@ public class Server  {
       Naming.rebind(registryURL, exportedObj);
       System.out.println("SERVER READY.");
      
-      while(true){
-         Thread.sleep(500);
-         exportedObj.generateNumber();
-      }
 
     } catch (Exception re) {
       System.out.println("ERROR: Exception in Server: " + re);
@@ -45,7 +41,7 @@ public class Server  {
   private static void startRegistry(int RMIPortNum) throws RemoteException{
     try {
       Registry registry =  LocateRegistry.getRegistry(RMIPortNum);
-      registry.list( );  
+      registry.list();  
         // This call will throw an exception
         // if the registry does not already exist
     }
