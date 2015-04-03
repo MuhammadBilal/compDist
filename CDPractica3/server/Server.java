@@ -29,6 +29,7 @@ public class Server  {
       Naming.rebind(registryURL, exportedObj);
       System.out.println("SERVER READY.");
      
+      while(true){}
 
     } catch (Exception re) {
       System.out.println("ERROR: Exception in Server: " + re);
