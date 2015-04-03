@@ -19,6 +19,12 @@ public class Application extends javax.swing.JFrame {
     }
 
 
+    public void logout(){
+        this.setContentPane(new LoginPanel(this));
+        this.invalidate();
+        this.validate();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
