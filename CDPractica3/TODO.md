@@ -4,10 +4,6 @@
  - Grupo de amigos de cada cliente
  - Notificar al grupo del conectado
  - Enviar al cliente la lista de amigos conectados
- - Web - gestión de usuarios
-      · registro
-      · cambio pass
-      · borrar cuenta
  - buscar por nombre y mandar petición
 
 ### Cliente
@@ -18,3 +14,8 @@
 ## DONE
 
  - Base de datos clientes y grupos
+ - Web - gestión de usuarios
+      · registro
+      · cambio pass
+      · borrar cuenta
+
