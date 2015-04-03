@@ -1,4 +1,5 @@
 import java.rmi.*;
+import java.rmi.server.*;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -68,7 +69,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          // Send notification to each friend
          for(int i = 0; i < friendlist.size(); i++){
             friend = friendlist.get(i);
-            if(friend != null) friend.receiveNotification(ClientInterface clientObj);
+            if(friend != null) friend.receiveNotification(clientObj);
          }
 
       }else{   // Login error

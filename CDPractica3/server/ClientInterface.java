@@ -1,11 +1,12 @@
 import java.rmi.*;
+import java.util.ArrayList;
 
 public interface ClientInterface extends java.rmi.Remote {
 
 
    public String getUser();
 
-   public Strig getPass();
+   public String getPass();
 
    public void checkLogin(boolean b);
 
