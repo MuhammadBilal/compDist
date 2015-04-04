@@ -12,6 +12,10 @@ public class LoginPanel extends javax.swing.JPanel {
         txtPass.setText("");
         labelError.setText("");
     }
+    
+    public void setError(String msg){
+        this.labelError.setText(msg);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -129,11 +133,12 @@ public class LoginPanel extends javax.swing.JPanel {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String pass = new String(txtPass.getPassword());
-        
-        if(txtUser.getText()==null || txtUser.getText().equals("") || pass.equals("")){
+        String user = txtUser.getText();
+        if(user==null || user.equals("") || pass.equals("")){
             labelError.setText("Los campos usuario y password deben estar cubiertos");
 
         }else{
+            this.app.startClient(user, pass);
             // CIFRAR CONTRASEÑA PARA PASARLA AL SERVER
             // conectar con el servidor pasando la pass y el user para checkear
             // una vez comprobado, si es correcto pasar a la siguiente pantalla

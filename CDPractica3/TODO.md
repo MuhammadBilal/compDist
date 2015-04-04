@@ -1,6 +1,5 @@
 ## TODO
 
- - Servidor multiples clientes
  - Grupo de amigos de cada cliente
  - Notificar al grupo del conectado
  - Enviar al cliente la lista de amigos conectados
@@ -18,4 +17,4 @@
       · registro
       · cambio pass
       · borrar cuenta
-
+ - Servidor multiples clientes

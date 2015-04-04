@@ -6,6 +6,7 @@ import java.util.Vector;
 import java.util.Iterator;
 
 import model.*;   // DAO
+import ClientInt;
 
 public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    private DAOInt DAO;
@@ -46,7 +47,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                   Iterator it = clientList.vector();
                   while(it.hasNext()){
                      if(it.next().getUser().equals(friendName)){
-                        friend = it.next();
+                        friend = (ClientInterface) it.next();
                         if(friend != null)   friendlist.add(friend);
                      }
                   }

@@ -2,11 +2,19 @@
 package cliente;
 
 import java.awt.Color;
+import java.io.*;
+import java.rmi.*;
 
 public class Application extends javax.swing.JFrame {
 
     public LoginPanel login;
     public ListPanel list;
+    private static String hostName = "localhost";
+    private static String portNum = "3456";
+    private Integer time = 0;
+    private ServerInterface h;
+    private ClientInterface callbackObj;
+    private boolean flag = false;
     
     public Application() {
         initComponents();
@@ -16,13 +24,46 @@ public class Application extends javax.swing.JFrame {
         this.setContentPane(login);
         this.invalidate();
         this.validate();
+        
+        //startClient();
     }
 
+    public void startClient(String user, String pass){
+        try{
+            int RMIPort;
+            InputStreamReader is = new InputStreamReader(System.in);
+            BufferedReader bf = new BufferedReader(is);
+            
+            RMIPort = Integer.parseInt(portNum);
+            String registryURL = "rmi://localhost:"+portNum+"/callback";
+            
+            h=(ServerInterface)Naming.lookup(registryURL);
+            System.out.println("Lookup completed");
+                    
+            callbackObj = new ClientImp(this, user, pass);
+        }catch(Exception e){
+            
+        }
+    }
 
+    public void loged(){
+        this.setContentPane(new ListPanel(this));
+        this.invalidate();
+        this.validate();   
+                
+        ChatFrame c = new ChatFrame();
+        c.setAlwaysOnTop(true);
+        c.setVisible(true);
+    }
+    
     public void logout(){
         this.setContentPane(new LoginPanel(this));
         this.invalidate();
         this.validate();
+    }
+    
+    public void errorLogin(){
+        this.login.setError("El nombre de usuario y/o la contraseña son incorrectos");
     }
     
     @SuppressWarnings("unchecked")

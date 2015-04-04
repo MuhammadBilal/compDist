@@ -7,9 +7,11 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
    private String user;
    private String pass;
 
-   public ClientImp(Application clientApp){
+   public ClientImp(Application clientApp, String user, String pass){
       super();
       this.clientApp = clientApp;
+      this.user = user;
+      this.pass = pass;
    }
 
    public String getUser(){ return this.user; }
@@ -18,11 +20,9 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
    public void checkLogin(boolean b){
 
       if(b){ // Login correct
-
-
+         clientApp.loged();
       }else{ // Error
-
-
+         clientApp.errorLogin();
       }
    }
 
