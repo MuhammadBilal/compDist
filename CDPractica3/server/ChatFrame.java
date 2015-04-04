@@ -1,5 +1,4 @@
 
-package cliente;
 
 import java.awt.Color;
 

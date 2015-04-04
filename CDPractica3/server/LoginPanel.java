@@ -1,5 +1,4 @@
 
-package cliente;
 
 public class LoginPanel extends javax.swing.JPanel {
 

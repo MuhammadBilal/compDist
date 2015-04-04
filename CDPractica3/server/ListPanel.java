@@ -1,5 +1,4 @@
 
-package cliente;
 
 public class ListPanel extends javax.swing.JPanel {
 

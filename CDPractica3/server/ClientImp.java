@@ -8,7 +8,7 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
    private String user;
    private String pass;
 
-   public ClientImp(Application clientApp, String user, String pass){
+   public ClientImp(Application clientApp, String user, String pass) throws RemoteException {
       super();
       this.clientApp = clientApp;
       this.user = user;
