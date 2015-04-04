@@ -6,7 +6,6 @@ import java.util.Vector;
 import java.util.Iterator;
 
 import model.*;   // DAO
-import ClientInt;
 
 public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    private DAOInt DAO;
@@ -24,8 +23,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       
       Client client;
       ArrayList<Client> friends;
-      ArrayList<ClientInterface> friendlist, aux;
-      // DAO = (DAOInt) new DAOImpl(); //*for PabloPunk* : en caso de que vuelva a dar problemas the same thing  
+      ArrayList<ClientInterface> friendlist=null, aux=null;
       String user = clientObj.getUser();
       String pass = clientObj.getPass();
       String friendName;
@@ -42,13 +40,14 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
             for(int i = 0; i < friends.size(); i++){
 
                friendlist = new ArrayList();
+               friendName = friends.get(i).getName();
 
                if(clients.containsKey(friendName)){
-                  Iterator it = clientList.vector();
+                  Iterator it = clientList.iterator();
                   while(it.hasNext()){
-                     if(it.next().getUser().equals(friendName)){
-                        friend = (ClientInterface) it.next();
-                        if(friend != null)   friendlist.add(friend);
+                     friend = (ClientInterface) it.next();
+                     if(friend.getUser().equals(friendName)){
+                        friendlist.add(friend);
                      }
                   }
                   aux = new ArrayList(clients.get(friendName));
@@ -65,7 +64,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          }
 
          // Send friend list to the client
-         clientObj.receiveFriendlist(friendlist);
+         if(friendlist != null)  clientObj.receiveFriendlist(friendlist);
 
          // Send notification to each friend
          for(int i = 0; i < friendlist.size(); i++){
@@ -84,7 +83,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          String user, friendName;
          ArrayList<ClientInterface> friends, aux;
          
-         user = clientObj.getName();
+         user = clientObj.getUser();
          friends = clients.get(user);
          
          if(friends != null){

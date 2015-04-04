@@ -1,4 +1,5 @@
 import java.rmi.*;
+import java.rmi.server.*;
 import java.util.ArrayList;
 
 public class ClientImp extends UnicastRemoteObject implements ClientInterface {

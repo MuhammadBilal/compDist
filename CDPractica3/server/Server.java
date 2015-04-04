@@ -23,7 +23,7 @@ public class Server  {
     try{     
       int RMIPortNum = Integer.parseInt(portNum);
       startRegistry(RMIPortNum);
-      ServerImpl exportedObj = new ServerImpl();
+      ServerImp exportedObj = new ServerImp();
       registryURL = "rmi://localhost:" + portNum + "/callback";
 
       Naming.rebind(registryURL, exportedObj);

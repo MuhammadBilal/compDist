@@ -18,10 +18,13 @@ rmic ClientImp
 
 mkdir client
 mkdir server
+mkdir client/media
+mkdir server/model
+mkdir server/controller
 
-cp -r media/ client/
-cp -r model/ server/
-cp -r controller/ server/
+cp -r media/ client/media/
+cp -r model/ server/model/
+cp -r controller/ server/controller/
 
 #Servidor
 mv Server.class server/
