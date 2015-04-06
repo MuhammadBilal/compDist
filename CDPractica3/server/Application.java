@@ -23,7 +23,12 @@ public class Application extends javax.swing.JFrame {
         this.invalidate();
         this.validate();
 
-        try{
+      
+    }
+
+    public void startClient(String user, String pass){
+      
+       try{
             int RMIPort;
             InputStreamReader is = new InputStreamReader(System.in);
             BufferedReader bf = new BufferedReader(is);
@@ -38,10 +43,8 @@ public class Application extends javax.swing.JFrame {
         }catch(Exception e){
             this.login.setError("ERROR: no se pudo conectar con el servidor");
         }
-    }
 
-    public void startClient(String user, String pass){
-      
+
       try{
          h.register(callbackObj);
          System.out.println("Registered for callback");
