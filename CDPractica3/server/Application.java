@@ -22,10 +22,13 @@ public class Application extends javax.swing.JFrame {
         this.setContentPane(login);
         this.invalidate();
         this.validate();
+
+      
     }
 
     public void startClient(String user, String pass){
-        try{
+      
+       try{
             int RMIPort;
             InputStreamReader is = new InputStreamReader(System.in);
             BufferedReader bf = new BufferedReader(is);
@@ -38,8 +41,18 @@ public class Application extends javax.swing.JFrame {
                     
             callbackObj = new ClientImp(this, user, pass);
         }catch(Exception e){
-            
+            this.login.setError("ERROR: no se pudo conectar con el servidor");
         }
+
+
+      try{
+         h.register(callbackObj);
+         System.out.println("Registered for callback");
+         
+      }catch(Exception e){
+         System.out.println("ERROR: register for callback exception: "+e.getMessage());
+      }
+
     }
 
     public void loged(){
@@ -53,6 +66,14 @@ public class Application extends javax.swing.JFrame {
     }
     
     public void logout(){
+
+        try{
+            System.out.println("Unregistered for callback");
+            h.unregister(callbackObj);
+        }catch(Exception e){
+            System.out.println("ERROR: unregister for callback exception: "+e.getMessage());
+        }
+
         this.setContentPane(new LoginPanel(this));
         this.invalidate();
         this.validate();
