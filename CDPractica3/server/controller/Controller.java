@@ -90,7 +90,10 @@ public class Controller extends HttpServlet {
 
                     Client cliente = new Client(username, email, password1);
 
-                    DAO.newClient(cliente);
+                    if ( ! DAO.newClient(cliente) ) {
+                        mostrarPaginaError("Error: Ya existe un cliente con ese nombre, o se ha producido un error en la transacción", session, request, response);
+                        return false;
+                    }
 
                     return true; // registro valido
 
