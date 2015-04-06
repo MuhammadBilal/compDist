@@ -69,7 +69,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          // Send notification to each friend
          for(int i = 0; i < friendlist.size(); i++){
             friend = friendlist.get(i);
-            if(friend != null) friend.receiveNotification(clientObj);
+            if(friend != null) friend.connectedUser(clientObj);
          }
 
       }else{   // Login error
@@ -87,7 +87,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          friends = clients.get(user);
          
          if(friends != null){
-                                 
+            
             for(int i = 0; i < friends.size(); i++){
                friendName = friends.get(i).getUser();
                aux = new ArrayList(clients.get(friendName));

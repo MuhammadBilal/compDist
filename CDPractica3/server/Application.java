@@ -13,10 +13,11 @@ public class Application extends javax.swing.JFrame {
     private ServerInterface h;
     private ClientInterface callbackObj;
     private boolean flag = false;
+    private Color blueBackground = new Color(18, 15, 102);
     
     public Application() {
         initComponents();
-        this.getContentPane().setBackground(new Color(18, 15, 102));
+        this.getContentPane().setBackground(blueBackground);
         
         login = new LoginPanel(this);
         this.setContentPane(login);
@@ -61,7 +62,7 @@ public class Application extends javax.swing.JFrame {
         this.validate();   
                 
         ChatFrame c = new ChatFrame();
-        c.setAlwaysOnTop(true);
+        //c.setAlwaysOnTop(true);
         c.setVisible(true);
     }
     
@@ -74,7 +75,8 @@ public class Application extends javax.swing.JFrame {
             System.out.println("ERROR: unregister for callback exception: "+e.getMessage());
         }
 
-        this.setContentPane(new LoginPanel(this));
+        login = new LoginPanel(this);
+        this.setContentPane(login);
         this.invalidate();
         this.validate();
     }
@@ -138,11 +140,6 @@ public class Application extends javax.swing.JFrame {
                 new Application().setVisible(true);
             }
         });
-        
-        
-        
-        
-        
         
     }
 

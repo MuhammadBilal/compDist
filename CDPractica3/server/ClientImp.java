@@ -28,10 +28,10 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
    }
 
    public void receiveFriendlist(ArrayList<ClientInterface> friendlist) throws java.rmi.RemoteException {
-
+      
    }
 
-   public void receiveNotification(ClientInterface friend) throws java.rmi.RemoteException {
+   public void connectedUser(ClientInterface friend) throws java.rmi.RemoteException {
 
    }
 

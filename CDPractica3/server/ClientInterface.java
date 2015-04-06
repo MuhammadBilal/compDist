@@ -12,7 +12,7 @@ public interface ClientInterface extends java.rmi.Remote {
 
    public void receiveFriendlist(ArrayList<ClientInterface> friendlist) throws java.rmi.RemoteException;
 
-   public void receiveNotification(ClientInterface friend) throws java.rmi.RemoteException;
+   public void connectedUser(ClientInterface friend) throws java.rmi.RemoteException;
 
    public void disconnectedUser(ClientInterface friend) throws java.rmi.RemoteException;
 
