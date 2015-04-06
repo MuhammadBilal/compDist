@@ -1,7 +1,7 @@
 #!/bin/bash
 
-rm -r client/
-rm -r server/
+rm -rf client/
+rm -rf server/
 
 echo "Compilando..."
 echo
