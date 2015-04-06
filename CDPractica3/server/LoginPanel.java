@@ -31,7 +31,7 @@ public class LoginPanel extends javax.swing.JPanel {
             labelError.setText("Los campos usuario y password deben estar cubiertos");
         }else{
 
-
+            this.app.startClient(user, pass);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
