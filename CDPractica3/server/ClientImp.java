@@ -15,10 +15,10 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
       this.pass = pass;
    }
 
-   public String getUser(){ return this.user; }
-   public String getPass(){ return this.pass; }
+   public String getUser() throws java.rmi.RemoteException { return this.user; }
+   public String getPass() throws java.rmi.RemoteException { return this.pass; }
 
-   public void checkLogin(boolean b){
+   public void checkLogin(boolean b) throws java.rmi.RemoteException {
 
       if(b){ // Login correct
          clientApp.loged();
@@ -27,19 +27,19 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
       }
    }
 
-   public void receiveFriendlist(ArrayList<ClientInterface> friendlist){
+   public void receiveFriendlist(ArrayList<ClientInterface> friendlist) throws java.rmi.RemoteException {
 
    }
 
-   public void receiveNotification(ClientInterface friend){
+   public void receiveNotification(ClientInterface friend) throws java.rmi.RemoteException {
 
    }
 
-   public void disconnectedUser(ClientInterface friend){
+   public void disconnectedUser(ClientInterface friend) throws java.rmi.RemoteException {
 
    }
 
-   public void close(){
+   public void close() throws java.rmi.RemoteException {
       clientApp.logout();
    }
 
