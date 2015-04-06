@@ -10,7 +10,20 @@ public class ListPanel extends javax.swing.JPanel {
         
     }
 
-    @SuppressWarnings("unchecked")
+   private void txtSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUserActionPerformed
+   
+    }//GEN-LAST:event_txtSearchUserActionPerformed
+
+    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+
+    }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        this.app.logout();
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+
+       @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -128,20 +141,6 @@ public class ListPanel extends javax.swing.JPanel {
                 .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchUserActionPerformed
-   
-    }//GEN-LAST:event_txtSearchUserActionPerformed
-
-    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
-
-    }//GEN-LAST:event_btnAddUserActionPerformed
-
-    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
-        this.app.setContentPane(new LoginPanel(this.app));
-        this.app.invalidate();
-        this.app.validate();
-    }//GEN-LAST:event_btnLogoutActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
