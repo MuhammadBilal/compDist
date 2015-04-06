@@ -38,6 +38,7 @@ public class DAOImpl implements DAOInt {
       Client friend;
 
       try{
+         controller = new DBController();
          con = controller.getConnection();
          con.setAutoCommit(false);
          stm = con.createStatement();
@@ -72,6 +73,7 @@ public class DAOImpl implements DAOInt {
       Statement stm = null;
 
       try{
+         controller = new DBController();
          con = controller.getConnection();
          con.setAutoCommit(false);
          stm = con.createStatement();
@@ -102,7 +104,8 @@ public class DAOImpl implements DAOInt {
       return resultClient;
    }
 
-   public void newClient(Client client){
+   // returns false if it fails (or the name already exists)
+   public boolean newClient(Client client){
       Connection con = null;
       Statement stm = null;
 
@@ -114,6 +117,7 @@ public class DAOImpl implements DAOInt {
       String date = sdf.format(dt);
 
       try{
+         controller = new DBController();
          con = controller.getConnection();
          con.setAutoCommit(false);
 
@@ -129,19 +133,24 @@ public class DAOImpl implements DAOInt {
 
          }else{
             System.out.println("ERROR: El usuario a introducir ya existe en la BD.");
+            return false;
          }
 
          con.commit();
       }catch(SQLException e){
          System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+         return false;
       }finally{
          try{
             stm.close();
             con.close();
          }catch(SQLException e){
             System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+            return false;
          }
       }
+
+      return true;
    }
 
    public void removeClient(Client client){ // polymorph
