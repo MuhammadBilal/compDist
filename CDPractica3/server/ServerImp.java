@@ -104,7 +104,6 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          }
 
          clients.remove(user);
-         clientObj.close();
       }else{
          System.out.println("ERROR: ServerImpl;unregister : client wasn't registered.");
       }

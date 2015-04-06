@@ -39,8 +39,4 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
 
    }
 
-   public void close() throws java.rmi.RemoteException {
-      clientApp.logout();
-   }
-
 }
