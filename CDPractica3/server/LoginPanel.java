@@ -16,6 +16,28 @@ public class LoginPanel extends javax.swing.JPanel {
         this.labelError.setText(msg);
     }
 
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        labelError.setText("");
+    }//GEN-LAST:event_txtUserActionPerformed
+
+    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
+        labelError.setText("");
+    }//GEN-LAST:event_txtPassActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String pass = new String(txtPass.getPassword());
+        String user = txtUser.getText();
+        if(user==null || user.equals("") || pass.equals("")){
+            labelError.setText("Los campos usuario y password deben estar cubiertos");
+        }else{
+
+
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -121,47 +143,6 @@ public class LoginPanel extends javax.swing.JPanel {
                 .addContainerGap(95, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        labelError.setText("");
-    }//GEN-LAST:event_txtUserActionPerformed
-
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        labelError.setText("");
-    }//GEN-LAST:event_txtPassActionPerformed
-
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String pass = new String(txtPass.getPassword());
-        String user = txtUser.getText();
-        if(user==null || user.equals("") || pass.equals("")){
-            labelError.setText("Los campos usuario y password deben estar cubiertos");
-
-        }else{
-            this.app.startClient(user, pass);
-            // CIFRAR CONTRASEÑA PARA PASARLA AL SERVER
-            // conectar con el servidor pasando la pass y el user para checkear
-            // una vez comprobado, si es correcto pasar a la siguiente pantalla
-            // si no, advertir con un mensaje de error
-                                     //    |
-            if(pass.equals("pass")){ // <--|
-                System.out.println("USER: "+txtUser.getText());
-                System.out.println("PASS: "+pass);
-                
-                this.app.setContentPane(new ListPanel(this.app));
-                this.app.invalidate();
-                this.app.validate();   
-                
-                ChatFrame c = new ChatFrame();
-                c.setAlwaysOnTop(true);
-                c.setVisible(true);
-                
-            }else{
-                labelError.setText("El nombre de usuario y/o la contraseña son incorrectos");
-            }
-            
-        }
-    }//GEN-LAST:event_btnLoginActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
