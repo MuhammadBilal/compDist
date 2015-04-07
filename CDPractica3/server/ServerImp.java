@@ -35,11 +35,12 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          
          friends = new ArrayList(DAO.getFriends(user));
 
-         if(friends!=null){
+         if(friends.size() > 0) { // Has friends
+
+            friendlist = new ArrayList();
 
             for(int i = 0; i < friends.size(); i++){
-
-               friendlist = new ArrayList();
+               
                friendName = friends.get(i).getName();
 
                if(clients.containsKey(friendName)){
@@ -64,9 +65,13 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          }
 
          // Send friend list to the client
-         if(friendlist != null)  clientObj.receiveFriendlist(friendlist);
-         else clientObj.receiveFriendlist( new ArrayList<ClientInterface>() );
-
+         if(friendlist != null)  {
+            clientObj.receiveFriendlist(friendlist);
+         } else {
+            //**************************************
+            // aqui se produce el ERROR: register for callback exception: null
+            clientObj.receiveFriendlist( new ArrayList<ClientInterface>() );
+         }
 
          // Send notification to each friend
          for(int i = 0; i < friendlist.size(); i++){
@@ -74,7 +79,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
             if(friend != null) friend.connectedUser(clientObj);
          }
 
-      }else{   // Login error
+      } else {   // Login error
          clientObj.checkLogin(false);
       }
    }
