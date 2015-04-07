@@ -2,6 +2,8 @@
 import java.awt.Color;
 import java.io.*;
 import java.rmi.*;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Application extends javax.swing.JFrame {
 
@@ -15,6 +17,7 @@ public class Application extends javax.swing.JFrame {
     private ClientInterface callbackObj;
     private boolean flag = false;
     private Color blueBackground = new Color(18, 15, 102);
+    private HashMap<String,ClientInterface> friends;
     
     public Application() {
         initComponents();
@@ -24,8 +27,6 @@ public class Application extends javax.swing.JFrame {
         this.setContentPane(login);
         this.invalidate();
         this.validate();
-
-      
     }
 
     public void startClient(String user, String pass){
@@ -85,6 +86,28 @@ public class Application extends javax.swing.JFrame {
     
     public void errorLogin(){
         this.login.setError("El nombre de usuario y/o la contraseña son incorrectos");
+    }
+
+    public void updateFriendList(ArrayList<ClientInterface> friendlist) throws RemoteException {
+        //this.friends.addAll(friendlist); // Updates friend list in the app
+
+        String[] names = new String[friendlist.size()];
+        for (int i = 0; i < friendlist.size(); i++) {
+            names[i] = friendlist.get(i).getUser();
+        }
+        list.updateConectedUsers(names);
+    }
+
+    public void connectedUser(ClientInterface friend) throws RemoteException {
+        String name = friend.getUser();
+        this.friends.put(name, friend);
+        list.connectedUser(name);
+    }
+
+    public void disconnectedUser(ClientInterface friend) throws RemoteException {
+        String name = friend.getUser();
+        this.friends.remove(name);
+        list.disconnectedUser(name);
     }
     
     @SuppressWarnings("unchecked")

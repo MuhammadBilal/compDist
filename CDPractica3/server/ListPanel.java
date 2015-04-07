@@ -155,4 +155,21 @@ public class ListPanel extends javax.swing.JPanel {
     private javax.swing.JLabel labelAlert;
     private javax.swing.JTextField txtSearchUser;
     // End of variables declaration//GEN-END:variables
+
+    public void updateConectedUsers(String[] names) {
+        System.out.println("Implementar actualizacion de usuarios conectados:\n"+ names);
+    }
+
+    public void disconnectedUser(String name) {
+        System.out.println("Implementar usuario desconectado -> " + name);
+    }
+
+    public void connectedUser(String name) {
+        System.out.println("Implementar usuario conectado -> " + name);
+    }
+
+    public void notification(String message) {
+        System.out.println("Implementar notificacion -> " + message);
+    }
+
 }

@@ -65,6 +65,8 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
 
          // Send friend list to the client
          if(friendlist != null)  clientObj.receiveFriendlist(friendlist);
+         else clientObj.receiveFriendlist( new ArrayList<ClientInterface>() );
+
 
          // Send notification to each friend
          for(int i = 0; i < friendlist.size(); i++){
