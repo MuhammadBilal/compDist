@@ -28,13 +28,7 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
    }
 
    public void receiveFriendlist(ArrayList<ClientInterface> friendlist) throws java.rmi.RemoteException {
-      if (friendlist != null) {
-
-         // pasarle al JList el friendlist
-
-      } else {
-         System.out.println("Null friendlist received");
-      }
+      
    }
 
    public void connectedUser(ClientInterface friend) throws java.rmi.RemoteException {
