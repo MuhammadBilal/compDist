@@ -9,6 +9,7 @@ public class Application extends javax.swing.JFrame {
     public ListPanel list;
     private static String hostName = "localhost";
     private static String portNum = "3456";
+    private String user;
     private Integer time = 0;
     private ServerInterface h;
     private ClientInterface callbackObj;
@@ -31,6 +32,7 @@ public class Application extends javax.swing.JFrame {
       
        try{
             int RMIPort;
+            this.user = user;
             InputStreamReader is = new InputStreamReader(System.in);
             BufferedReader bf = new BufferedReader(is);
             
@@ -57,7 +59,7 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void loged(){
-        this.setContentPane(new ListPanel(this));
+        this.setContentPane(new ListPanel(this, this.user));
         this.invalidate();
         this.validate();   
                 
