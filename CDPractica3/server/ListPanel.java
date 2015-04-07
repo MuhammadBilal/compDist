@@ -33,8 +33,8 @@ public class ListPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         txtSearchUser = new javax.swing.JTextField();
         btnAddUser = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        labelError = new javax.swing.JLabel();
+        labelNombreUsuario = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(18, 15, 102));
         setPreferredSize(new java.awt.Dimension(370, 530));
@@ -86,13 +86,13 @@ public class ListPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Futura", 2, 13)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 51, 51));
-        jLabel2.setText("ERROR");
+        labelError.setFont(new java.awt.Font("Futura", 2, 13)); // NOI18N
+        labelError.setForeground(new java.awt.Color(204, 51, 51));
+        labelError.setText("ERROR");
 
-        jLabel3.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("NOMBRE_USUARIO");
+        labelNombreUsuario.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
+        labelNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelNombreUsuario.setText("NOMBRE_USUARIO");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -101,14 +101,14 @@ public class ListPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
+                    .addComponent(labelNombreUsuario)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelAlert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(13, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -124,14 +124,14 @@ public class ListPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
+                .addComponent(labelNombreUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(labelError)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelAlert)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -147,10 +147,10 @@ public class ListPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelAlert;
+    private javax.swing.JLabel labelError;
+    private javax.swing.JLabel labelNombreUsuario;
     private javax.swing.JTextField txtSearchUser;
     // End of variables declaration//GEN-END:variables
 }
