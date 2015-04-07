@@ -21,8 +21,11 @@ public class ListPanel extends javax.swing.JPanel {
         btnAddUser = new javax.swing.JButton();
         labelError = new javax.swing.JLabel();
         labelNombreUsuario = new javax.swing.JLabel();
+<<<<<<< HEAD
         jScrollPane1 = new javax.swing.JScrollPane();
         listaConectados = new javax.swing.JList();
+=======
+>>>>>>> origin/fix1
 
         setBackground(new java.awt.Color(18, 15, 102));
         setPreferredSize(new java.awt.Dimension(370, 530));
@@ -64,6 +67,7 @@ public class ListPanel extends javax.swing.JPanel {
         labelError.setFont(new java.awt.Font("Futura", 2, 13)); // NOI18N
         labelError.setForeground(new java.awt.Color(204, 51, 51));
         labelError.setText("ERROR");
+<<<<<<< HEAD
 
         labelNombreUsuario.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
         labelNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -75,6 +79,12 @@ public class ListPanel extends javax.swing.JPanel {
             public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(listaConectados);
+=======
+
+        labelNombreUsuario.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
+        labelNombreUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        labelNombreUsuario.setText("NOMBRE_USUARIO");
+>>>>>>> origin/fix1
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -87,6 +97,7 @@ public class ListPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+<<<<<<< HEAD
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(labelNombreUsuario)
@@ -99,11 +110,35 @@ public class ListPanel extends javax.swing.JPanel {
                         .addComponent(labelError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelNotificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+=======
+                    .addComponent(labelNombreUsuario)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelAlert, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+>>>>>>> origin/fix1
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                 .addContainerGap(13, Short.MAX_VALUE)
+=======
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+>>>>>>> origin/fix1
                 .addComponent(labelNombreUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -112,6 +147,11 @@ public class ListPanel extends javax.swing.JPanel {
                     .addComponent(btnAddUser, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelError)
+<<<<<<< HEAD
+=======
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelAlert)
+>>>>>>> origin/fix1
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelNotificacion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,11 +181,18 @@ public class ListPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel1;
+<<<<<<< HEAD
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelError;
     private javax.swing.JLabel labelNombreUsuario;
     private javax.swing.JLabel labelNotificacion;
     private javax.swing.JList listaConectados;
+=======
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelAlert;
+    private javax.swing.JLabel labelError;
+    private javax.swing.JLabel labelNombreUsuario;
+>>>>>>> origin/fix1
     private javax.swing.JTextField txtSearchUser;
     // End of variables declaration//GEN-END:variables
 }
