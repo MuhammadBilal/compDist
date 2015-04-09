@@ -60,7 +60,7 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void loged(){
-        this.setContentPane(new ListPanel(this, this.user));
+        this.setContentPane(list = new ListPanel(this, this.user));
         this.invalidate();
         this.validate();   
                 
@@ -93,12 +93,17 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void updateFriendList(ArrayList<ClientInterface> friendlist) throws RemoteException {
-        //this.friends.addAll(friendlist); // Updates friend list in the app
-
         String[] names = new String[friendlist.size()];
+        String name = "";
+
+        // Updates friend list in the app
         for (int i = 0; i < friendlist.size(); i++) {
-            names[i] = friendlist.get(i).getUser();
+            ClientInterface c = (ClientInterface) friendlist.get(i);
+            name = c.getUser();
+            this.friends.put(name, c);
+            names[i] = name;
         }
+
         list.updateConectedUsers(names);
     }
 

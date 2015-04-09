@@ -101,12 +101,12 @@ public class ListPanel extends javax.swing.JPanel {
 
         JListFriends.setFont(new java.awt.Font("Futura", 0, 14)); // NOI18N
         JListFriends.setForeground(new java.awt.Color(0, 153, 0));
-        JListFriends.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(JListFriends);
+        // JListFriends.setModel(new javax.swing.AbstractListModel() {
+        //     String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        //     public int getSize() { return strings.length; }
+        //     public Object getElementAt(int i) { return strings[i]; }
+        // });
+        // jScrollPane1.setViewportView(JListFriends);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -167,7 +167,14 @@ public class ListPanel extends javax.swing.JPanel {
     // End of variables declaration                   
 
     public void updateConectedUsers(String[] names) {
-        System.out.println("Implementar actualizacion de usuarios conectados:\n"+ names);
+        JListFriends.setModel(new javax.swing.AbstractListModel() {
+            public int getSize() { return names.length; }
+            public Object getElementAt(int i) { return names[i]; }
+        });
+        System.out.println("Names: ");
+        for (String n : names) {
+            System.out.println(n+", ");
+        }
     }
 
     public void disconnectedUser(String name) {
