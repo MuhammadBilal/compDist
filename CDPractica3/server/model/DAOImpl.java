@@ -68,11 +68,12 @@ public class DAOImpl implements DAOInt {
 
    public Client getClient(String clientName){
       
-      Client resultClient = new Client();
+      Client resultClient = null;
       Connection con = null;
       Statement stm = null;
 
       try{
+         resultClient = new Client();
          controller = new DBController();
          con = controller.getConnection();
          con.setAutoCommit(false);

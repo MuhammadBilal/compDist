@@ -116,4 +116,9 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       }
    }
 
+   public void searchUser(String username){
+      Client c;
+
+      c = DAO.getClient(username);
+   }
 }
