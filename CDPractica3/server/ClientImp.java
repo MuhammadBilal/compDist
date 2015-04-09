@@ -45,4 +45,11 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
       }
    }
 
+   public void receiveNotification(String notification) throws java.rmi.RemoteException {
+      clientApp.setNotification(notification);
+   }
+
+   public void receiveError(String error) throws java.rmi.RemoteException {
+      clientApp.setError(error);
+   }
 }

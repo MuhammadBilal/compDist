@@ -40,6 +40,37 @@ public class ListPanel extends javax.swing.JPanel {
     }                                         
 
 
+    public void updateConectedUsers(String[] names) {
+        JListFriends.setModel(new javax.swing.AbstractListModel() {
+            public int getSize() { return names.length; }
+            public Object getElementAt(int i) { return names[i]; }
+        });
+        System.out.println("Names: ");
+        for (String n : names) {
+            System.out.println(n+", ");
+        }
+    }
+
+    public void disconnectedUser(String name) {
+        System.out.println("Implementar usuario desconectado -> " + name);
+    }
+
+    public void connectedUser(String name) {
+        System.out.println("Implementar usuario conectado -> " + name);
+    }
+
+    public void notification(String message) {
+        System.out.println("Implementar notificacion -> " + message);
+    }
+
+    public void setNotification(String notification){
+         this.labelAlert(notification);
+    }
+
+    public void setError(String error){
+         this.labelError(error);
+    }
+
        @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
@@ -165,28 +196,4 @@ public class ListPanel extends javax.swing.JPanel {
     private javax.swing.JLabel labelAlert;
     private javax.swing.JTextField txtSearchUser;
     // End of variables declaration                   
-
-    public void updateConectedUsers(String[] names) {
-        JListFriends.setModel(new javax.swing.AbstractListModel() {
-            public int getSize() { return names.length; }
-            public Object getElementAt(int i) { return names[i]; }
-        });
-        System.out.println("Names: ");
-        for (String n : names) {
-            System.out.println(n+", ");
-        }
-    }
-
-    public void disconnectedUser(String name) {
-        System.out.println("Implementar usuario desconectado -> " + name);
-    }
-
-    public void connectedUser(String name) {
-        System.out.println("Implementar usuario conectado -> " + name);
-    }
-
-    public void notification(String message) {
-        System.out.println("Implementar notificacion -> " + message);
-    }
-
 }

@@ -16,4 +16,7 @@ public interface ClientInterface extends java.rmi.Remote {
 
    public void disconnectedUser(ClientInterface friend) throws java.rmi.RemoteException;
 
+   public void receiveNotification(String notification) throws java.rmi.RemoteException;
+
+   public void receiveError(String error) throws java.rmi.RemoteException;
 }
