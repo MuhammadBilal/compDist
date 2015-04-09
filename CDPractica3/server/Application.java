@@ -89,7 +89,15 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void addUser(String username){
-       //implementar
+       h.searchUser(username);
+    }
+
+    public void setNotification(String notification){
+        this.list.setNotification();
+    }
+
+    public void setError(String error){
+
     }
 
     public void updateFriendList(ArrayList<ClientInterface> friendlist) throws RemoteException {

@@ -116,9 +116,16 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       }
    }
 
-   public void searchUser(String username){
+   public void searchUser(ClientInterface clientObj, String username) throws java.rmi.RemoteException {
       Client c;
 
       c = DAO.getClient(username);
+
+      if(c != null){
+         
+      }else{
+      
+
+      }
    }
 }
