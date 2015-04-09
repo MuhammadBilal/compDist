@@ -89,11 +89,11 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void addUser(String username){
-       h.searchUser(username);
+       //h.searchUser(username);
     }
 
     public void setNotification(String notification){
-        this.list.setNotification();
+        //this.list.setNotification();
     }
 
     public void setError(String error){
@@ -103,6 +103,8 @@ public class Application extends javax.swing.JFrame {
     public void updateFriendList(ArrayList<ClientInterface> friendlist) throws RemoteException {
         String[] names = new String[friendlist.size()];
         String name = "";
+
+        System.out.println("** Debug: " + friendlist.size() + " amigos conectados.");
 
         // Updates friend list in the app
         for (int i = 0; i < friendlist.size(); i++) {

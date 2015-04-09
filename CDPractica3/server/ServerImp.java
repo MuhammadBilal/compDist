@@ -20,7 +20,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    } 
    
    public synchronized void register(ClientInterface clientObj) throws java.rmi.RemoteException {
-      
+
       Client client;
       ArrayList<Client> friends;
       ArrayList<ClientInterface> friendlist=null, aux=null;
@@ -68,9 +68,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          if(friendlist != null)  {
             clientObj.receiveFriendlist(friendlist);
          } else {
-            //**************************************
-            // aqui se produce el ERROR: register for callback exception: null
-            clientObj.receiveFriendlist( new ArrayList<ClientInterface>() );
+            clientObj.receiveFriendlist(new ArrayList<ClientInterface>());
          }
 
          // Send notification to each friend

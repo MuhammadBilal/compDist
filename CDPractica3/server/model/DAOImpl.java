@@ -43,11 +43,10 @@ public class DAOImpl implements DAOInt {
          con.setAutoCommit(false);
          stm = con.createStatement();
 
-         ResultSet rs = stm.executeQuery("SELECT client2 FROM friends WHERE client1 ='"+clientName+"' UNION SELECT client1 FROM friends WHERE client2 ='"+clientName+"';");
+         ResultSet rs = stm.executeQuery("SELECT client2 FROM friends WHERE client1 ='"+clientName+"';");
 
          while(rs.next()){
             friendName = rs.getString("client2");
-            if (friendName == null) friendName = rs.getString("client1");
             friend = new Client(friendName);
             friends.add(friend);
          }
