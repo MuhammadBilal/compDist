@@ -88,6 +88,10 @@ public class Application extends javax.swing.JFrame {
         this.login.setError("El nombre de usuario y/o la contraseña son incorrectos");
     }
 
+    public void addUser(String username){
+       //implementar
+    }
+
     public void updateFriendList(ArrayList<ClientInterface> friendlist) throws RemoteException {
         //this.friends.addAll(friendlist); // Updates friend list in the app
 

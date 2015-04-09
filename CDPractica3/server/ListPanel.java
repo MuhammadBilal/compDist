@@ -13,11 +13,26 @@ public class ListPanel extends javax.swing.JPanel {
     }
 
    private void txtSearchUserActionPerformed(java.awt.event.ActionEvent evt) {                                              
-   
+      String username = txtSearchUser.getText();
+            
+      if(username==null || username.equals("")){
+         labelError.setText("Error: debe introducirse un nombre de usuario");
+      }else{
+         this.app.addUser(username);
+         labelError.setText("");
+      }
+
     }                                             
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {                                           
-
+         String username = txtSearchUser.getText();
+         
+         if(username==null || username.equals("")){
+            labelError.setText("Error: debe introducirse un nombre de usuario");
+         }else{
+            this.app.addUser(username);
+            labelError.setText("");
+         }
     }                                          
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {                                          
