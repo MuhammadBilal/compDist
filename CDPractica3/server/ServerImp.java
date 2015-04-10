@@ -16,11 +16,12 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    public ServerImp() throws RemoteException{
       super();
       clients = new HashMap();
+      friendsOnline = new HashMap();
       clientList = new Vector();
       DAO = (DAOInt) new DAOImpl();
    } 
    
-   public synchronized void register(ClientInterface clientObj, PeerInterface peer ) throws java.rmi.RemoteException {
+   public synchronized void register(ClientInterface clientObj, PeerInterface peerObj ) throws java.rmi.RemoteException {
 
       Client client;
       ArrayList<Client> friends;
@@ -29,37 +30,38 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       String pass = clientObj.getPass();
       String friendName;
       ClientInterface friend;
+      PeerInterface peer;
+      ArrayList<PeerInterface> friendlist2= null, aux2 = null;
 
       if(DAO.checkPass(user, pass)){ // Login OK
          clientObj.checkLogin(true);
          clientList.addElement(clientObj);
          
+         System.out.println("*Iniciada sesion: "+user);
+
          friends = new ArrayList(DAO.getFriends(user));
 
          if(friends.size() > 0) { // Has friends
 
             friendlist = new ArrayList();
+            friendlist2 = new ArrayList();   
 
-            for(int i = 0; i < friends.size(); i++){
-               
-               friendName = friends.get(i).getName();
+            if(!friendsOnline.isEmpty()){
 
-               if(clients.containsKey(friendName)){
-                  Iterator it = clientList.iterator();
-                  while(it.hasNext()){
-                     friend = (ClientInterface) it.next();
-                     if(friend.getUser().equals(friendName)){
-                        friendlist.add(friend);
-                     }
-                  }
-                  aux = new ArrayList(clients.get(friendName));
-                  if(aux == null)   aux = new ArrayList();
+               for(int i=0; i < friends.size(); i++){
 
-                  aux.add(clientObj);
-                  clients.remove(friendName);
-                  clients.put(friendName, aux);
+                  friendName = friends.get(i).getName();
+                  System.out.print("NOMBRE AMIGO #"+i+" "+friendName);
+                  
+                  if(friendsOnline.containsKey(friendName)){
+                     System.out.print("\t [ONLINE]");
+                  }              
+                  System.out.print("\n");
                }
             }
+
+            friendsOnline.put(user, friendlist2);
+
 
          }else{ // This guy is a looser
             // Send a notification - "You can add friends going..."??
@@ -110,6 +112,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          }
 
          clients.remove(user);
+         System.out.println("*Finalizada sesion: "+user);
       }else{
          System.out.println("ERROR: ServerImpl;unregister : client wasn't registered.");
       }
