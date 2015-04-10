@@ -98,11 +98,11 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void setNotification(String notification){
-        //this.list.setNotification();
+        this.list.setNotification(notification);
     }
 
     public void setError(String error){
-
+        this.list.setError(error);
     }
 
     public void updateFriendList(ArrayList<PeerInterface> friendlist) throws RemoteException {
@@ -129,16 +129,34 @@ public class Application extends javax.swing.JFrame {
         
     }
 
+    public void updateFriends(){
+        int i=0, size = this.friends.size();
+        if(size < 1){ return; }
+
+        String[] names = new String[size];
+
+        for(String name : friends.keySet()){
+            names[i] = name;
+            i++;
+        }
+
+        list.updateConectedUsers(names);
+    }
+
     public void connectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.put(name, friend);
         list.connectedUser(name);
+        setNotification(name+" se ha conectado.");
+        updateFriends();
     }
 
     public void disconnectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.remove(name);
         list.disconnectedUser(name);
+        //setNotification(name+" se ha desconectado.");
+        updateFriends();
     }
     
     @SuppressWarnings("unchecked")

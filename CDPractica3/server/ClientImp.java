@@ -39,14 +39,16 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface, P
    }
 
    public void connectedUser(PeerInterface friend) throws java.rmi.RemoteException {
-      clientApp.connectedUser(friend); // Upates friendlist in the interface
+      if (friend != null) {
+         clientApp.connectedUser(friend); // Upates friendlist in the interface
+      } else {
+         System.out.println("Null friend connected received from server");
+      }
    }
 
    public void disconnectedUser(PeerInterface friend) throws java.rmi.RemoteException {
       if (friend != null) {
-
          clientApp.disconnectedUser(friend); // Upates friendlist in the interface
-
       } else {
          System.out.println("Null friend disconnected received from server");
       }

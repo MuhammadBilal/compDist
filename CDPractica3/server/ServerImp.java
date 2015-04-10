@@ -54,7 +54,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                      friendlist.add(peer);
 
                      friend = (ClientInterface) clientList.get(friendName);
-                     //friend.connectedUser(peerObj);                              // Se le pasa al clientObj del amigo la peerObj del cliente actual
+                     friend.connectedUser(peerObj);                              // Se le pasa al clientObj del amigo la peerObj del cliente actual
                   }              
                   System.out.print("\n");
                }
@@ -105,7 +105,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                friendName = friends.get(i).getName();
                friend = (ClientInterface) clientList.get(friendName);
                pInt = (PeerInterface) friendsOnline.get(user);
-               //friend.disconnectedUser(pInt);
+               friend.disconnectedUser(pInt);
             }
 
          }
