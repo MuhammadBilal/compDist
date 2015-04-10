@@ -2,11 +2,18 @@ import java.rmi.*;
 import java.rmi.server.*;
 import java.util.ArrayList;
 
-public class ClientImp extends UnicastRemoteObject implements ClientInterface {
+public class ClientImp extends UnicastRemoteObject implements ClientInterface, PeerInterface {
 
    private Application clientApp;
    private String user;
    private String pass;
+
+   public ClientImp(Application clientApp, String user) throws RemoteException {
+      super();
+      this.clientApp = clientApp;
+      this.user = user;
+      this.pass = null;
+   }
 
    public ClientImp(Application clientApp, String user, String pass) throws RemoteException {
       super();
@@ -51,5 +58,10 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface {
 
    public void receiveError(String error) throws java.rmi.RemoteException {
       clientApp.setError(error);
+   }
+
+   public void sendMessage(String msg) throws java.rmi.RemoteException {
+      System.out.println("Implementar SEND MENSAJE");
+
    }
 }

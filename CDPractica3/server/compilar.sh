@@ -32,6 +32,7 @@ cp ClientInterface.class server/
 cp ServerInterface.class server/
 mv ServerImp.class server/
 mv ClientImp_Stub.class server/
+cp PeerInterface.class server/
 
 #Cliente
 mv *.class client/

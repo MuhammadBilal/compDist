@@ -64,11 +64,11 @@ public class ListPanel extends javax.swing.JPanel {
     }
 
     public void setNotification(String notification){
-         this.labelAlert(notification);
+         this.labelAlert.setText(notification);
     }
 
     public void setError(String error){
-         this.labelError(error);
+         this.labelError.setText(error);
     }
 
        @SuppressWarnings("unchecked")

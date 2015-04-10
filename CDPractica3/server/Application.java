@@ -15,6 +15,7 @@ public class Application extends javax.swing.JFrame {
     private Integer time = 0;
     private ServerInterface h;
     private ClientInterface callbackObj;
+    private PeerInterface peerObj;
     private boolean flag = false;
     private Color blueBackground = new Color(18, 15, 102);
     private HashMap<String,ClientInterface> friends;
@@ -44,13 +45,15 @@ public class Application extends javax.swing.JFrame {
             System.out.println("Lookup completed");
                     
             callbackObj = new ClientImp(this, user, pass);
+            peerObj = new ClientImp(this, user);
+
         }catch(Exception e){
             this.login.setError("ERROR: no se pudo conectar con el servidor");
         }
 
 
       try{
-         h.register(callbackObj);
+         h.register(callbackObj, peerObj);
          System.out.println("Registered for callback");
          
       }catch(Exception e){

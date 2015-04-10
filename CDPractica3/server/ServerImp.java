@@ -11,6 +11,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    private DAOInt DAO;
    private Vector clientList;
    private HashMap<String, ArrayList<ClientInterface>> clients;   // (String clientName, ArrayList<ClientInterface> friends)
+   private HashMap<String, ArrayList<PeerInterface>> friendsOnline;
 
    public ServerImp() throws RemoteException{
       super();
@@ -19,7 +20,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       DAO = (DAOInt) new DAOImpl();
    } 
    
-   public synchronized void register(ClientInterface clientObj) throws java.rmi.RemoteException {
+   public synchronized void register(ClientInterface clientObj, PeerInterface peer ) throws java.rmi.RemoteException {
 
       Client client;
       ArrayList<Client> friends;
