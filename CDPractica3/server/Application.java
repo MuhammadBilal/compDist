@@ -28,6 +28,8 @@ public class Application extends javax.swing.JFrame {
         this.setContentPane(login);
         this.invalidate();
         this.validate();
+
+        this.friends = new HashMap<>();
     }
 
     public void startClient(String user, String pass){
@@ -104,13 +106,19 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void updateFriendList(ArrayList<PeerInterface> friendlist) throws RemoteException {
-        String[] names = new String[friendlist.size()];
+        
+        int size = friendlist.size();
+        if (size < 1) {
+            return; // no conected friends
+        }
+
+        String[] names = new String[size];
         String name = "";
 
-        System.out.println("** Debug: " + friendlist.size() + " amigos conectados.");
+        //System.out.println("** Debug: " + friendlist.size() + " amigos conectados.");
          
         // Updates friend list in the app
-        for (int i = 0; i < friendlist.size(); i++) {
+        for (int i = 0; i < size; i++) {
             PeerInterface peer = (PeerInterface) friendlist.get(i);
             name = peer.getUser();
             this.friends.put(name, peer);

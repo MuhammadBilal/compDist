@@ -45,10 +45,7 @@ public class ListPanel extends javax.swing.JPanel {
             public int getSize() { return names.length; }
             public Object getElementAt(int i) { return names[i]; }
         });
-        System.out.println("Names: ");
-        for (String n : names) {
-            System.out.println(n+", ");
-        }
+        jScrollPane1.setViewportView(JListFriends);
     }
 
     public void disconnectedUser(String name) {
