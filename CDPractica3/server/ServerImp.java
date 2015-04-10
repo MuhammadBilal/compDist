@@ -124,10 +124,9 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       c = DAO.getClient(username);
 
       if(c != null){
-         
+         clientObj.receiveNotification("Enviada peticion amistad a '"+username+"'");
       }else{
-      
-
+         clientObj.receiveError("No existe el usuario '"+username+"'");
       }
    }
 }

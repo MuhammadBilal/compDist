@@ -47,7 +47,7 @@ public class ListPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(JListFriends);
     }
-
+    
     public void disconnectedUser(String name) {
         System.out.println("Implementar usuario desconectado -> " + name);
     }

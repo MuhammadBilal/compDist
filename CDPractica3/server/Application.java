@@ -94,21 +94,29 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void addUser(String username){
-       //h.searchUser(username);
+        try{
+            h.searchUser(callbackObj, username);
+            System.out.println("USUARIO A BUSCAR: "+username);
+        }catch(Exception e){
+            System.out.println("Exception searchUser: "+e.getMessage());
+        }
+       
     }
 
     public void setNotification(String notification){
+        System.out.println("NOTIFICACION: "+notification);
         this.list.setNotification(notification);
     }
 
     public void setError(String error){
+        System.out.println("ERROR: "+error);
         this.list.setError(error);
     }
 
     public void updateFriendList(ArrayList<PeerInterface> friendlist) throws RemoteException {
         
         int size = friendlist.size();
-        if (size < 1) {
+        if (size < 0) { // antes estaba a 1
             return; // no conected friends
         }
 
@@ -131,7 +139,7 @@ public class Application extends javax.swing.JFrame {
 
     public void updateFriends(){
         int i=0, size = this.friends.size();
-        if(size < 1){ return; }
+        if(size < 0){ return; }
 
         String[] names = new String[size];
 
@@ -146,7 +154,7 @@ public class Application extends javax.swing.JFrame {
     public void connectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.put(name, friend);
-        list.connectedUser(name);
+        //list.connectedUser(name);
         setNotification(name+" se ha conectado.");
         updateFriends();
     }
@@ -154,8 +162,8 @@ public class Application extends javax.swing.JFrame {
     public void disconnectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.remove(name);
-        list.disconnectedUser(name);
-        //setNotification(name+" se ha desconectado.");
+        //list.disconnectedUser(name);
+        setNotification(name+" se ha desconectado.");
         updateFriends();
     }
     
