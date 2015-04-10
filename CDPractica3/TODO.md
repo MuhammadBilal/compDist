@@ -1,8 +1,5 @@
 ## TODO
 
- - Grupo de amigos de cada cliente
- - Notificar al grupo del conectado
- - Enviar al cliente la lista de amigos conectados
  - buscar por nombre y mandar petición
 
 ### Cliente
@@ -18,3 +15,6 @@
       · cambio pass
       · borrar cuenta
  - Servidor multiples clientes
+ - Grupo de amigos de cada cliente
+ - Notificar al grupo del conectado
+ - Enviar al cliente la lista de amigos conectados
