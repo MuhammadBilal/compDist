@@ -20,3 +20,11 @@ CREATE TABLE friends (
    FOREIGN KEY (client1) REFERENCES clients(name) ON UPDATE CASCADE ON DELETE CASCADE,
    FOREIGN KEY (client2) REFERENCES clients(name) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+create table requests (
+   clientFrom varchar(64) NOT NULL,
+   clientTo varchar(64) NOT NULL,
+   primary key (clientFrom, clientTo),
+   foreign key (clientFrom) references clients(name) on update cascade on delete cascade,
+   foreign key (clientTo)   references clients(name) on update cascade on delete cascade
+);

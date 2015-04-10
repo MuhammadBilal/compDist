@@ -62,9 +62,8 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
 
             friendsOnline.put(user, peerObj);
 
-
          }else{ 
-            // Send a notification - "You can add friends going..."??
+            clientObj.receiveNotification("Aún no tienes amigos, prueba a buscar uno"); // forever alone
          }
 
          // Send friend list to the client
@@ -74,13 +73,14 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
             clientObj.receiveFriendlist(new ArrayList<PeerInterface>());
          }
 
-         /*
-         // Send notification to each friend
-         for(int i = 0; i < friendlist.size(); i++){
-            friend = friendlist.get(i);
-            if(friend != null) friend.connectedUser(peerObj);
+         // Friend Requests
+         ArrayList<Client> requests = DAO.getRequests(user);
+         if (requests != null) {
+            for (Client r : requests) {
+               clientObj.receiveRequest( r.getName() );
+            }
          }
-          */
+
       } else {   // Login error
          clientObj.checkLogin(false);
       }
@@ -119,14 +119,30 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    }
 
    public void searchUser(ClientInterface clientObj, String username) throws java.rmi.RemoteException {
-      Client c;
+      Client c=null;
+      String clientFrom = clientObj.getUser();
 
       c = DAO.getClient(username);
 
       if(c != null){
+         if ( DAO.isFriend(clientFrom, username) ) { // Already a friend
+            clientObj.receiveNotification("Ya eres amigo de "+ username);
+            return; // no more notifications
+         }
+         else if (clientFrom.equals(username)) { // himself
+            clientObj.receiveNotification("Quieres ser tu propio amigo? Qué raro...");
+            return; // no more notifications
+         }
+         else if ( clientList.containsKey(username) ) { // Not a friend, but connected to server
+            // request notification
+            ClientInterface clientNotificate = (ClientInterface) clientList.get(username);
+            clientNotificate.receiveRequest(clientFrom);
+         } else { // Not connected
+            DAO.newRequest(clientFrom, username); // to database
+         }
          clientObj.receiveNotification("Enviada peticion amistad a '"+username+"'");
       }else{
-         clientObj.receiveError("No existe el usuario '"+username+"'");
+         clientObj.receiveNotification("No existe el usuario "+username);
       }
    }
 }

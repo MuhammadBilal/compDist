@@ -28,6 +28,70 @@ public class DAOImpl implements DAOInt {
       return getFriends(client.getName());
    }
 
+   public void newRequest(String clientFrom, String clientTo) {Connection con = null;
+      Statement stm = null;
+
+      try{
+         controller = new DBController();
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+
+         stm = con.createStatement();
+
+         stm.execute("INSERT INTO requests values ('"+clientFrom+"','"+clientTo+"');");
+
+         con.commit();
+      }catch(SQLException e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
+   }
+
+   public ArrayList<Client> getRequests(String clientTo){ // obtains friends requesting this client name
+      ArrayList<Client> requests = new ArrayList<Client>();
+      Connection con = null;
+      Statement stm = null;
+
+      String clientFrom;
+      Client req;
+
+      try{
+         controller = new DBController();
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+         stm = con.createStatement();
+
+         ResultSet rs = stm.executeQuery("SELECT clientFrom FROM requests WHERE clientTo ='"+clientTo+"';");
+
+         while(rs.next()){
+            clientFrom = rs.getString("clientFrom");
+            req = new Client(clientFrom);
+            requests.add(req);
+         }
+
+         con.commit();
+      }catch(SQLException e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
+
+      if (requests.isEmpty()) return null;
+
+      return requests;
+   }
+
    public ArrayList<Client> getFriends(String clientName){
       
       ArrayList<Client> friends = new ArrayList<Client>();
@@ -66,6 +130,45 @@ public class DAOImpl implements DAOInt {
       return friends;
    }
 
+   public boolean isFriend(String client1, String client2) {
+      Connection con = null;
+      Statement stm = null;
+
+      boolean ret = false;
+
+      try{
+         controller = new DBController();
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+         stm = con.createStatement();
+
+         ResultSet rs = stm.executeQuery("SELECT client2 FROM friends WHERE client1 ='"+client1+"';");
+
+         while(rs.next()){
+            String friendName = rs.getString("client2");
+
+            if (friendName.equals(client2)) {
+               System.out.println(friendName + " es amigo de " + client1);
+               ret = true; // Is a friend
+               break;
+            }
+         }
+
+         con.commit();
+      }catch(SQLException e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
+
+      return ret;
+   }
+
    public Client getClient(String clientName){
       
       Client resultClient = null;
@@ -87,6 +190,8 @@ public class DAOImpl implements DAOInt {
             resultClient.setPassword(rs.getString("pass"));
             resultClient.setDate(rs.getString("date"));
          } else {
+            stm.close();
+            con.close();
             return null;
          }
 
@@ -134,13 +239,14 @@ public class DAOImpl implements DAOInt {
 
          }else{
             System.out.println("ERROR: El usuario a introducir ya existe en la BD.");
+            stm.close();
+            con.close();
             return false;
          }
 
          con.commit();
       }catch(SQLException e){
          System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
-         return false;
       }finally{
          try{
             stm.close();

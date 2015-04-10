@@ -166,6 +166,10 @@ public class Application extends javax.swing.JFrame {
         setNotification(name+" se ha desconectado.");
         updateFriends();
     }
+
+    public void receiveRequestNotification(String clientFrom) throws RemoteException {
+        System.out.println("** Debug -> Peticion de amistad de "+ clientFrom);
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
