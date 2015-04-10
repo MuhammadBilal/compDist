@@ -18,7 +18,7 @@ public class Application extends javax.swing.JFrame {
     private PeerInterface peerObj;
     private boolean flag = false;
     private Color blueBackground = new Color(18, 15, 102);
-    private HashMap<String,ClientInterface> friends;
+    private HashMap<String, PeerInterface> friends;
     
     public Application() {
         initComponents();
@@ -103,30 +103,31 @@ public class Application extends javax.swing.JFrame {
 
     }
 
-    public void updateFriendList(ArrayList<ClientInterface> friendlist) throws RemoteException {
+    public void updateFriendList(ArrayList<PeerInterface> friendlist) throws RemoteException {
         String[] names = new String[friendlist.size()];
         String name = "";
 
         System.out.println("** Debug: " + friendlist.size() + " amigos conectados.");
-
+         
         // Updates friend list in the app
         for (int i = 0; i < friendlist.size(); i++) {
-            ClientInterface c = (ClientInterface) friendlist.get(i);
-            name = c.getUser();
-            this.friends.put(name, c);
+            PeerInterface peer = (PeerInterface) friendlist.get(i);
+            name = peer.getUser();
+            this.friends.put(name, peer);
             names[i] = name;
         }
 
         list.updateConectedUsers(names);
+        
     }
 
-    public void connectedUser(ClientInterface friend) throws RemoteException {
+    public void connectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.put(name, friend);
         list.connectedUser(name);
     }
 
-    public void disconnectedUser(ClientInterface friend) throws RemoteException {
+    public void disconnectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.remove(name);
         list.disconnectedUser(name);

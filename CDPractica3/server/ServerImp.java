@@ -11,13 +11,15 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    private DAOInt DAO;
    private Vector clientList;
    private HashMap<String, ArrayList<ClientInterface>> clients;   // (String clientName, ArrayList<ClientInterface> friends)
-   private HashMap<String, ArrayList<PeerInterface>> friendsOnline;
+   private HashMap<String, PeerInterface> friendsOnline;
+   private HashMap<String, ClientInterface> clientList2;
 
    public ServerImp() throws RemoteException{
       super();
       clients = new HashMap();
       friendsOnline = new HashMap();
       clientList = new Vector();
+      clientList2 = new HashMap();
       DAO = (DAOInt) new DAOImpl();
    } 
    
@@ -36,7 +38,8 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       if(DAO.checkPass(user, pass)){ // Login OK
          clientObj.checkLogin(true);
          clientList.addElement(clientObj);
-         
+         clientList2.put(user, clientObj);
+
          System.out.println("*Iniciada sesion: "+user);
 
          friends = new ArrayList(DAO.getFriends(user));
@@ -44,9 +47,10 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          if(friends.size() > 0) { // Has friends
 
             friendlist = new ArrayList();
-            friendlist2 = new ArrayList();   
-
+   
             if(!friendsOnline.isEmpty()){
+
+               friendlist2 = new ArrayList();
 
                for(int i=0; i < friends.size(); i++){
 
@@ -55,31 +59,37 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                   
                   if(friendsOnline.containsKey(friendName)){
                      System.out.print("\t [ONLINE]");
+                     peer = (PeerInterface) friendsOnline.get(friendName);
+                     friendlist2.add(peer);
+
+                     friend = (ClientInterface) clientList2.get(friendName);
+                     //friend.connectedUser(peerObj);                              // Se le pasa al clientObj del amigo la peerObj del cliente actual
                   }              
                   System.out.print("\n");
                }
             }
 
-            friendsOnline.put(user, friendlist2);
+            friendsOnline.put(user, peerObj);
 
 
-         }else{ // This guy is a looser
+         }else{ 
             // Send a notification - "You can add friends going..."??
          }
 
          // Send friend list to the client
-         if(friendlist != null)  {
-            clientObj.receiveFriendlist(friendlist);
+         if(friendlist2 != null)  {
+            clientObj.receiveFriendlist(friendlist2);
          } else {
-            clientObj.receiveFriendlist(new ArrayList<ClientInterface>());
+            clientObj.receiveFriendlist(new ArrayList<PeerInterface>());
          }
 
+         /*
          // Send notification to each friend
          for(int i = 0; i < friendlist.size(); i++){
             friend = friendlist.get(i);
-            if(friend != null) friend.connectedUser(clientObj);
+            if(friend != null) friend.connectedUser(peerObj);
          }
-
+          */
       } else {   // Login error
          clientObj.checkLogin(false);
       }
@@ -103,15 +113,17 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                aux.remove(clientObj);
                clients.remove(friendName);
                clients.put(friendName, aux);
-
-               friends.get(i).disconnectedUser(clientObj); // Notificacion desconexion a los clientes en la lista de amigos
+               // **** OBTENER EL PEER OBJ DE LA LISTA DE CONECTADOS Y PASARLO A DISCONNECTED USER
+               //friends.get(i).disconnectedUser(PeerObj); // Notificacion desconexion a los clientes en la lista de amigos
             }
 
 
-         }else{ // Such a looser..
+         }else{ 
          }
 
          clients.remove(user);
+         clientList2.remove(user);
+         friendsOnline.remove(user);
          System.out.println("*Finalizada sesion: "+user);
       }else{
          System.out.println("ERROR: ServerImpl;unregister : client wasn't registered.");

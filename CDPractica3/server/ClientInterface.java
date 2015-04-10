@@ -10,11 +10,11 @@ public interface ClientInterface extends java.rmi.Remote {
 
    public void checkLogin(boolean b) throws java.rmi.RemoteException;
 
-   public void receiveFriendlist(ArrayList<ClientInterface> friendlist) throws java.rmi.RemoteException;
+   public void receiveFriendlist(ArrayList<PeerInterface> friendlist) throws java.rmi.RemoteException;
 
-   public void connectedUser(ClientInterface friend) throws java.rmi.RemoteException;
+   public void connectedUser(PeerInterface friend) throws java.rmi.RemoteException;
 
-   public void disconnectedUser(ClientInterface friend) throws java.rmi.RemoteException;
+   public void disconnectedUser(PeerInterface friend) throws java.rmi.RemoteException;
 
    public void receiveNotification(String notification) throws java.rmi.RemoteException;
 

@@ -34,15 +34,15 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface, P
       }
    }
 
-   public void receiveFriendlist(ArrayList<ClientInterface> friendlist) throws java.rmi.RemoteException {
+   public void receiveFriendlist(ArrayList<PeerInterface> friendlist) throws java.rmi.RemoteException {
       clientApp.updateFriendList(friendlist); // Upates friendlist in the interface
    }
 
-   public void connectedUser(ClientInterface friend) throws java.rmi.RemoteException {
+   public void connectedUser(PeerInterface friend) throws java.rmi.RemoteException {
       clientApp.connectedUser(friend); // Upates friendlist in the interface
    }
 
-   public void disconnectedUser(ClientInterface friend) throws java.rmi.RemoteException {
+   public void disconnectedUser(PeerInterface friend) throws java.rmi.RemoteException {
       if (friend != null) {
 
          clientApp.disconnectedUser(friend); // Upates friendlist in the interface
