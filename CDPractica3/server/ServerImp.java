@@ -2,24 +2,19 @@ import java.rmi.*;
 import java.rmi.server.*;
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.Iterator;
 
 import model.*;   // DAO
 
 public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    private DAOInt DAO;
-   private Vector clientList;
-   private HashMap<String, ArrayList<ClientInterface>> clients;   // (String clientName, ArrayList<ClientInterface> friends)
    private HashMap<String, PeerInterface> friendsOnline;
-   private HashMap<String, ClientInterface> clientList2;
+   private HashMap<String, ClientInterface> clientList;
 
    public ServerImp() throws RemoteException{
       super();
-      clients = new HashMap();
       friendsOnline = new HashMap();
-      clientList = new Vector();
-      clientList2 = new HashMap();
+      clientList = new HashMap();
       DAO = (DAOInt) new DAOImpl();
    } 
    
@@ -27,30 +22,26 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
 
       Client client;
       ArrayList<Client> friends;
-      ArrayList<ClientInterface> friendlist=null, aux=null;
       String user = clientObj.getUser();
       String pass = clientObj.getPass();
       String friendName;
       ClientInterface friend;
       PeerInterface peer;
-      ArrayList<PeerInterface> friendlist2= null, aux2 = null;
+      ArrayList<PeerInterface> friendlist= null;
 
       if(DAO.checkPass(user, pass)){ // Login OK
          clientObj.checkLogin(true);
-         clientList.addElement(clientObj);
-         clientList2.put(user, clientObj);
+         clientList.put(user, clientObj);
 
          System.out.println("*Iniciada sesion: "+user);
 
          friends = new ArrayList(DAO.getFriends(user));
 
-         if(friends.size() > 0) { // Has friends
-
-            friendlist = new ArrayList();
+         if(friends.size() > 0) { // Has friends   
    
             if(!friendsOnline.isEmpty()){
 
-               friendlist2 = new ArrayList();
+               friendlist = new ArrayList();
 
                for(int i=0; i < friends.size(); i++){
 
@@ -60,9 +51,9 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                   if(friendsOnline.containsKey(friendName)){
                      System.out.print("\t [ONLINE]");
                      peer = (PeerInterface) friendsOnline.get(friendName);
-                     friendlist2.add(peer);
+                     friendlist.add(peer);
 
-                     friend = (ClientInterface) clientList2.get(friendName);
+                     friend = (ClientInterface) clientList.get(friendName);
                      //friend.connectedUser(peerObj);                              // Se le pasa al clientObj del amigo la peerObj del cliente actual
                   }              
                   System.out.print("\n");
@@ -77,8 +68,8 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          }
 
          // Send friend list to the client
-         if(friendlist2 != null)  {
-            clientObj.receiveFriendlist(friendlist2);
+         if(friendlist != null)  {
+            clientObj.receiveFriendlist(friendlist);
          } else {
             clientObj.receiveFriendlist(new ArrayList<PeerInterface>());
          }
@@ -96,38 +87,35 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    }
 
    public synchronized void unregister(ClientInterface clientObj) throws java.rmi.RemoteException {
-      if(clientList.removeElement(clientObj)){  // este if es necesario???
+      //if(clientList.removeElement(clientObj)){  // este if es necesario???
          // eliminar en los amigos la conexion - cerrar ventanas abiertas?/poner led verde en negro?
+         
          String user, friendName;
-         ArrayList<ClientInterface> friends, aux;
-         
+         ArrayList<Client> friends;
+         ClientInterface friend;
+         PeerInterface pInt;
+
          user = clientObj.getUser();
-         friends = clients.get(user);
-         
-         if(friends != null){
+   
+         friends = new ArrayList(DAO.getFriends(user));
+
+         if(friends.size() > 0){
             
             for(int i = 0; i < friends.size(); i++){
-               friendName = friends.get(i).getUser();
-               aux = new ArrayList(clients.get(friendName));
-               
-               aux.remove(clientObj);
-               clients.remove(friendName);
-               clients.put(friendName, aux);
-               // **** OBTENER EL PEER OBJ DE LA LISTA DE CONECTADOS Y PASARLO A DISCONNECTED USER
-               //friends.get(i).disconnectedUser(PeerObj); // Notificacion desconexion a los clientes en la lista de amigos
+               friendName = friends.get(i).getName();
+               friend = (ClientInterface) clientList.get(friendName);
+               pInt = (PeerInterface) friendsOnline.get(user);
+               //friend.disconnectedUser(pInt);
             }
 
-
-         }else{ 
          }
 
-         clients.remove(user);
-         clientList2.remove(user);
          friendsOnline.remove(user);
+         clientList.remove(user);
          System.out.println("*Finalizada sesion: "+user);
-      }else{
-         System.out.println("ERROR: ServerImpl;unregister : client wasn't registered.");
-      }
+      //}else{
+        // System.out.println("ERROR: ServerImpl;unregister : client wasn't registered.");
+      //}
    }
 
    public void searchUser(ClientInterface clientObj, String username) throws java.rmi.RemoteException {
