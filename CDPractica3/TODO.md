@@ -1,6 +1,7 @@
 ## TODO
 
  - buscar por nombre y mandar petición
+ - comprobar en server si alguien se ha ido sin logout
 
 ### Cliente
  - visualizar peticiones / aceptar-rechazar

@@ -7,18 +7,19 @@ import java.util.ArrayList;
 
 public class Application extends javax.swing.JFrame {
 
-    public LoginPanel login;
-    public ListPanel list;
     private static String hostName = "localhost";
     private static String portNum = "3456";
-    private String user;
-    private Integer time = 0;
+
+    public LoginPanel login;
+    public ListPanel list;
+
     private ServerInterface h;
     private ClientInterface callbackObj;
     private PeerInterface peerObj;
-    private boolean flag = false;
+
     private Color blueBackground = new Color(18, 15, 102);
     private HashMap<String, PeerInterface> friends;
+    private String user;
     
     public Application() {
         initComponents();
@@ -69,9 +70,9 @@ public class Application extends javax.swing.JFrame {
         this.invalidate();
         this.validate();   
                 
-        ChatFrame c = new ChatFrame();
+        //ChatFrame c = new ChatFrame();
         //c.setAlwaysOnTop(true);
-        c.setVisible(true);
+        //c.setVisible(true);
     }
     
     public void logout(){
@@ -87,6 +88,12 @@ public class Application extends javax.swing.JFrame {
         this.setContentPane(login);
         this.invalidate();
         this.validate();
+
+        list = null;
+        this.friends = null;
+        callbackObj = null;
+        peerObj = null;
+        h= null;
     }
     
     public void errorLogin(){
