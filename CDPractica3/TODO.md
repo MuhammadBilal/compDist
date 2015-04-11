@@ -3,9 +3,7 @@
  - comprobar en server si alguien se ha ido sin logout
 
 ### Cliente
- - visualizar peticiones / aceptar-rechazar
  - enviar mensajes P2P
- - Login / logout
 
 ## DONE
 
@@ -19,3 +17,5 @@
  - Notificar al grupo del conectado
  - Enviar al cliente la lista de amigos conectados
  - buscar por nombre y mandar petición
+ - visualizar peticiones / aceptar-rechazar
+ - Login / logout
