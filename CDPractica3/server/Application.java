@@ -101,6 +101,7 @@ public class Application extends javax.swing.JFrame {
         callbackObj = null;
         peerObj = null;
         h= null;
+        chatsOn = null;
     }
     
     public void errorLogin(){
@@ -184,6 +185,12 @@ public class Application extends javax.swing.JFrame {
         String name = friend.getUser();
         this.friends.put(name, friend);
         setNotification(name+" se ha conectado.");
+
+        if(!chatsOn.isEmpty() && chatsOn.containsKey(name)){
+            ChatFrame chat = chatsOn.get(name);
+            chat.reconnectedUser();
+        }
+
         updateFriends();
     }
 
@@ -191,6 +198,12 @@ public class Application extends javax.swing.JFrame {
         String name = friend.getUser();
         this.friends.remove(name);
         setNotification(name+" se ha desconectado.");
+
+        if(!chatsOn.isEmpty() && chatsOn.containsKey(name)){
+            ChatFrame chat = chatsOn.get(name);
+            chat.disconnectedUser();
+        }
+
         updateFriends();
     }
 
@@ -218,16 +231,7 @@ public class Application extends javax.swing.JFrame {
             }
         }
     }
-/*
-    public void startChat(PeerInterface friend) throws RemoteException { //llamada desde el amigo
-        ChatFrame chat;
-        String friendName = friend.getUser();
 
-        if(chatsOn.isEmpty() || !chatsOn.containsKey(friendName)){
-            //
-        }
-    }
-*/
     public void sendMessage(PeerInterface friend, String message){
         
         try{
@@ -239,7 +243,7 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void receiveMessage(PeerInterface friend, String msg) throws RemoteException { 
-    // llega desde la interfaz del amigo, se busca y se abre el chat
+
         String friendName = friend.getUser();
         ChatFrame chat;
 

@@ -9,6 +9,8 @@ public class ChatFrame extends javax.swing.JFrame {
     private Application app;
     private PeerInterface peer;
     private boolean chatClosed;
+    private boolean connected;
+    private String username;
 
     public ChatFrame(Application app, PeerInterface peer) {
         initComponents();
@@ -20,12 +22,14 @@ public class ChatFrame extends javax.swing.JFrame {
         this.app = app;
         this.peer = peer;
         this.chatClosed = false;
-        
+        this.connected = true;
+
         DefaultCaret caret = (DefaultCaret) areaChat.getCaret();  // automatic scroll down
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);      
 
         try{
-            labelUsername.setText(peer.getUser());
+            username = peer.getUser();
+            labelUsername.setText(username);
         }catch(Exception e){}
         
         this.addWindowListener(new java.awt.event.WindowAdapter(){
@@ -40,6 +44,16 @@ public class ChatFrame extends javax.swing.JFrame {
         areaChat.append(msg+"\n");
     }
 
+    public void disconnectedUser(){
+        areaChat.append(" - - - "+username+" se ha desconectado - - -\n");
+        this.connected = false;
+    }
+
+    public void reconnectedUser(){
+        areaChat.append(" - - - "+username+" se ha reconectado - - -\n");
+        this.connected = true;
+    }
+
     private void txtMsgActionPerformed(java.awt.event.ActionEvent evt){
         String message = txtMsg.getText();
 
@@ -51,11 +65,12 @@ public class ChatFrame extends javax.swing.JFrame {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         String message = txtMsg.getText();
-
-        if(message != null && !message.equals("")){
-            app.sendMessage(peer, message);
-        }
-        this.txtMsg.setText("");
+        if(connected){
+            if(message != null && !message.equals("")){
+                app.sendMessage(peer, message);
+            }
+            this.txtMsg.setText("");
+         }
     }//GEN-LAST:event_btnSendActionPerformed
    
     public void closeChat(){

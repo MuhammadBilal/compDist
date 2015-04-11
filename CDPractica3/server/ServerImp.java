@@ -95,14 +95,19 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          friends = new ArrayList(DAO.getFriends(user));
 
          if(friends.size() > 0){
-            
-            for(int i = 0; i < friends.size(); i++){
-               friendName = friends.get(i).getName();
-               friend = (ClientInterface) clientList.get(friendName);
-               pInt = (PeerInterface) friendsOnline.get(user);
-               friend.disconnectedUser(pInt);
-            }
 
+            if(!friendsOnline.isEmpty()){
+
+               for(int i = 0; i < friends.size(); i++){
+                  friendName = friends.get(i).getName();
+
+                  if(friendsOnline.containsKey(friendName)){
+                     friend = (ClientInterface) clientList.get(friendName);
+                     pInt = (PeerInterface) friendsOnline.get(user);
+                     friend.disconnectedUser(pInt);
+                  }
+               }
+            }
          }
 
          friendsOnline.remove(user);
