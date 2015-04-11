@@ -91,6 +91,10 @@ public class Application extends javax.swing.JFrame {
             System.out.println("ERROR: unregister for callback exception: "+e.getMessage());
         }
 
+        for (ChatFrame c : chatsOn.values()) {
+            c.dispose();
+        }
+
         login = new LoginPanel(this);
         this.setContentPane(login);
         this.invalidate();
