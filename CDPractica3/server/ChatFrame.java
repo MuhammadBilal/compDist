@@ -126,6 +126,12 @@ public class ChatFrame extends javax.swing.JFrame {
         txtMsg.setFont(new java.awt.Font("Futura", 0, 13)); // NOI18N
         txtMsg.setForeground(new java.awt.Color(255, 255, 255));
 
+        txtMsg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMsgActionPerformed(evt);
+            }
+        });
+
         labelUsername.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
         labelUsername.setForeground(new java.awt.Color(255, 255, 255));
         //labelUsername.setText("NOMBRE_AMIGO");
