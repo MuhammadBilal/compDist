@@ -33,6 +33,9 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface, P
          clientApp.errorLogin();
       }
    }
+   public void alreadyLogged() throws java.rmi.RemoteException {
+       clientApp.alreadyLogged();
+   }
 
    public void receiveFriendlist(ArrayList<PeerInterface> friendlist) throws java.rmi.RemoteException {
       clientApp.updateFriendList(friendlist); // Upates friendlist in the interface

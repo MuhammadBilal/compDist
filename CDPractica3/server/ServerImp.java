@@ -30,54 +30,58 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
       ArrayList<PeerInterface> friendlist= null;
 
       if(DAO.checkPass(user, pass)){ // Login OK
-         clientObj.checkLogin(true);
-         clientList.put(user, clientObj);
+         if(!clientList.containsKey(user)){
 
-         System.out.println("*Iniciada sesion: "+user);
+            clientObj.checkLogin(true);
+            clientList.put(user, clientObj);
 
-         friends = new ArrayList(DAO.getFriends(user));
+            System.out.println("*Iniciada sesion: "+user);
 
-         if(friends.size() > 0) { // Has friends   
-   
-            if(!friendsOnline.isEmpty()){
+            friends = new ArrayList(DAO.getFriends(user));
 
-               friendlist = new ArrayList();
+            if(friends.size() > 0) { // Has friends   
+      
+               if(!friendsOnline.isEmpty()){
 
-               for(int i=0; i < friends.size(); i++){
+                  friendlist = new ArrayList();
 
-                  friendName = friends.get(i).getName();
-                  
-                  if(friendsOnline.containsKey(friendName)){
-                     peer = (PeerInterface) friendsOnline.get(friendName);
-                     friendlist.add(peer);
+                  for(int i=0; i < friends.size(); i++){
 
-                     friend = (ClientInterface) clientList.get(friendName);
-                     friend.connectedUser(peerObj);                              
-                  }              
+                     friendName = friends.get(i).getName();
+                     
+                     if(friendsOnline.containsKey(friendName)){
+                        peer = (PeerInterface) friendsOnline.get(friendName);
+                        friendlist.add(peer);
+
+                        friend = (ClientInterface) clientList.get(friendName);
+                        friend.connectedUser(peerObj);                              
+                     }              
+                  }
+               }
+
+               friendsOnline.put(user, peerObj);
+
+            }else{ 
+               clientObj.receiveNotification("Aún no tienes amigos, prueba a buscar uno"); 
+            }
+
+            // Send friend list to the client
+            if(friendlist != null)  {
+               clientObj.receiveFriendlist(friendlist);
+            } else {
+               clientObj.receiveFriendlist(new ArrayList<PeerInterface>());
+            }
+
+            // Friend Requests
+            ArrayList<Client> requests = DAO.getRequests(user);
+            if (requests != null) {
+               for (Client r : requests) {
+                  clientObj.receiveRequest( r.getName() );
                }
             }
-
-            friendsOnline.put(user, peerObj);
-
-         }else{ 
-            clientObj.receiveNotification("Aún no tienes amigos, prueba a buscar uno"); 
+         }else{ // Client loged before
+            clientObj.alreadyLogged();
          }
-
-         // Send friend list to the client
-         if(friendlist != null)  {
-            clientObj.receiveFriendlist(friendlist);
-         } else {
-            clientObj.receiveFriendlist(new ArrayList<PeerInterface>());
-         }
-
-         // Friend Requests
-         ArrayList<Client> requests = DAO.getRequests(user);
-         if (requests != null) {
-            for (Client r : requests) {
-               clientObj.receiveRequest( r.getName() );
-            }
-         }
-
       } else {   // Login error
          clientObj.checkLogin(false);
       }
@@ -124,11 +128,11 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
 
       if(c != null){
          if ( DAO.isFriend(clientFrom, username) ) { // Already a friend
-            clientObj.receiveNotification("Ya eres amigo de "+ username);
+            clientObj.receiveError("Ya eres amigo de "+ username);
             return; // no more notifications
          }
          else if (clientFrom.equals(username)) { // himself
-            clientObj.receiveNotification("Quieres ser tu propio amigo? Qué raro...");
+            clientObj.receiveError("Quieres ser tu propio amigo? Qué raro...");
             return; // no more notifications
          }
          else if ( clientList.containsKey(username) ) { // Not a friend, but connected to server
@@ -140,7 +144,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          }
          clientObj.receiveNotification("Enviada peticion amistad a '"+username+"'");
       }else{
-         clientObj.receiveNotification("No existe el usuario "+username);
+         clientObj.receiveError("No existe el usuario "+username);
       }
    }
 

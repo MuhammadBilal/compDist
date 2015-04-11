@@ -21,4 +21,6 @@ public interface ClientInterface extends java.rmi.Remote {
    public void receiveRequest(String clientFrom) throws java.rmi.RemoteException;
 
    public void receiveError(String error) throws java.rmi.RemoteException;
+
+   public void alreadyLogged() throws java.rmi.RemoteException;
 }

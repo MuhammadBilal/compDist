@@ -26,6 +26,7 @@ public class ChatFrame extends javax.swing.JFrame {
 
         DefaultCaret caret = (DefaultCaret) areaChat.getCaret();  // automatic scroll down
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);      
+        areaChat.setEditable(false);
 
         try{
             username = peer.getUser();
@@ -35,7 +36,8 @@ public class ChatFrame extends javax.swing.JFrame {
         this.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                closeChat();
+                if(app.isConnected(username)){ closeChat(); }
+                else{ deleteChat();}
             }
         });
     }
@@ -86,6 +88,11 @@ public class ChatFrame extends javax.swing.JFrame {
     public void setChatClosed(boolean b){ this.chatClosed = b; }
 
     public boolean isChatClosed(){ return this.chatClosed; }
+
+    public void deleteChat(){
+        dispose();
+        app.deleteChat(username);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

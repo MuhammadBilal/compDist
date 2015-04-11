@@ -27,13 +27,7 @@ public class Application extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // center of the screen
         this.getContentPane().setBackground(blueBackground);
         
-        login = new LoginPanel(this);
-        this.setContentPane(login);
-        this.invalidate();
-        this.validate();
-
-        this.friends = new HashMap<>();
-        this.chatsOn = new HashMap<>();
+        reset();
 
         this.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
@@ -42,6 +36,16 @@ public class Application extends javax.swing.JFrame {
             }
         });
         
+    }
+
+    public void reset(){
+        login = new LoginPanel(this);
+        this.setContentPane(login);
+        this.invalidate();
+        this.validate();
+
+        this.friends = new HashMap<>();
+        this.chatsOn = new HashMap<>();
     }
 
     public void startClient(String user, String pass){
@@ -81,6 +85,14 @@ public class Application extends javax.swing.JFrame {
         this.invalidate();
         this.validate();   
     }
+
+    public void alreadyLogged() {
+        try{
+            this.login.setError("ERROR: ya se ha iniciado sesion en otra aplicacion");
+        }catch(Exception e){
+            System.out.println("Error alreadyLogged: "+e);
+        }
+    }
     
     public void logout(){
 
@@ -95,17 +107,13 @@ public class Application extends javax.swing.JFrame {
             c.dispose();
         }
 
-        login = new LoginPanel(this);
-        this.setContentPane(login);
-        this.invalidate();
-        this.validate();
-
         list = null;
         this.friends = null;
         callbackObj = null;
         peerObj = null;
         h= null;
         chatsOn = null;
+        reset();
     }
     
     public void errorLogin(){
@@ -268,7 +276,15 @@ public class Application extends javax.swing.JFrame {
     public boolean noFriendsOnline(){
         return friends.isEmpty();
     }
+
+    public boolean isConnected(String username){
+        return friends.containsKey(username);
+    }
     
+    public void deleteChat(String username){
+        friends.remove(username);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
