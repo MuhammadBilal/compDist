@@ -30,7 +30,6 @@ public class ListPanel extends javax.swing.JPanel {
          labelError.setText("Error: debe introducirse un nombre de usuario");
       }else{
          this.app.addUser(username);
-         labelError.setText("");
       }
 
     }                                             
@@ -42,7 +41,6 @@ public class ListPanel extends javax.swing.JPanel {
             labelError.setText("Error: debe introducirse un nombre de usuario");
          }else{
             this.app.addUser(username);
-            labelError.setText("");
          }
     }                                          
 
@@ -64,7 +62,7 @@ public class ListPanel extends javax.swing.JPanel {
     }
 
     public void setError(String error){
-         this.labelError.setText(error);
+         labelError.setText(error);
     }
 
        @SuppressWarnings("unchecked")
