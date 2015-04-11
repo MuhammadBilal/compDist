@@ -195,6 +195,28 @@ public class Application extends javax.swing.JFrame {
         RequestFrame r = new RequestFrame(this, clientFrom);
         r.setVisible(true);
     }
+
+    public void startChat(String friend) {
+        PeerInterface friendInt = (PeerInterface) friends.get(friend);
+
+        ChatFrame chat = new ChatFrame(this, friendInt);
+        chat.setVisible(true);
+        // si se le da mas de una vez abre mas ventanas? - corregir
+        try{
+            friendInt.startChat(peerObj);
+        }catch(Exception e){
+            System.out.println("Exception: no se pudo abrir ventana de chat a otro peer: "+e);
+        }
+    }
+
+    public void startChat(PeerInterface friend) throws RemoteException { //llamada desde el amigo
+        ChatFrame chat = new ChatFrame(this, friend);
+        chat.setVisible(true);
+    }
+
+    public void sendMessage(PeerInterface friend, String message){
+        System.out.println("IMPLEMENTAR");
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
