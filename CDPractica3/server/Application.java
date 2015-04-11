@@ -17,12 +17,13 @@ public class Application extends javax.swing.JFrame {
     private ClientInterface callbackObj;
     private PeerInterface peerObj;
 
-    private Color blueBackground = new Color(18, 15, 102);
+    public Color blueBackground = new Color(18, 15, 102);
     private HashMap<String, PeerInterface> friends;
     private String user;
     
     public Application() {
         initComponents();
+        this.setLocationRelativeTo(null); // center of the screen
         this.getContentPane().setBackground(blueBackground);
         
         login = new LoginPanel(this);
@@ -175,7 +176,8 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void receiveRequestNotification(String clientFrom) throws RemoteException {
-        System.out.println("** Debug -> Peticion de amistad de "+ clientFrom);
+        RequestFrame r = new RequestFrame(this, clientFrom);
+        r.setVisible(true);
     }
     
     @SuppressWarnings("unchecked")

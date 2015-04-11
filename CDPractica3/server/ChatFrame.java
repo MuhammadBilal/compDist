@@ -7,6 +7,7 @@ public class ChatFrame extends javax.swing.JFrame {
 
     public ChatFrame() {
         initComponents();
+        this.setLocationRelativeTo(null); // center of the screen
         this.getContentPane().setBackground(new Color(18, 15, 102));
         this.txtMsg.requestFocus();
     }
