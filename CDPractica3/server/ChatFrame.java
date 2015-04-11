@@ -8,7 +8,7 @@ public class ChatFrame extends javax.swing.JFrame {
 
     private Application app;
     private PeerInterface peer;
-    //private boolean isVisible;
+    private boolean chatClosed;
 
     public ChatFrame(Application app, PeerInterface peer) {
         initComponents();
@@ -19,20 +19,21 @@ public class ChatFrame extends javax.swing.JFrame {
 
         this.app = app;
         this.peer = peer;
-
+        this.chatClosed = false;
+        
         DefaultCaret caret = (DefaultCaret) areaChat.getCaret();  // automatic scroll down
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);      
 
         try{
             labelUsername.setText(peer.getUser());
         }catch(Exception e){}
-        /*
+        
         this.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                visible(false);
+                closeChat();
             }
-        });*/
+        });
     }
 
     public void appendMessage(String msg){
@@ -57,14 +58,20 @@ public class ChatFrame extends javax.swing.JFrame {
         this.txtMsg.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
    
-    /*
-    public void visible(boolean b){
-        this.setVisible(b);
-        isVisible = false;
+    public void closeChat(){
+        setChatClosed(true);
+        setVisible(false);
     }
 
-    public boolean isVisible(){ return isVisible; }
-    */
+    public void openChat(){
+        setChatClosed(false);
+        setVisible(true);
+    }
+
+    public void setChatClosed(boolean b){ this.chatClosed = b; }
+
+    public boolean isChatClosed(){ return this.chatClosed; }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

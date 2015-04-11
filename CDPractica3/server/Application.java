@@ -80,10 +80,6 @@ public class Application extends javax.swing.JFrame {
         this.setContentPane(list = new ListPanel(this, this.user));
         this.invalidate();
         this.validate();   
-                
-        //ChatFrame c = new ChatFrame();
-        //c.setAlwaysOnTop(true);
-        //c.setVisible(true);
     }
     
     public void logout(){
@@ -150,15 +146,13 @@ public class Application extends javax.swing.JFrame {
     public void updateFriendList(ArrayList<PeerInterface> friendlist) throws RemoteException {
         
         int size = friendlist.size();
-        if (size < 0) { // antes estaba a 1
+        if (size < 0) { 
             return; // no conected friends
         }
 
         String[] names = new String[size];
         String name = "";
 
-        //System.out.println("** Debug: " + friendlist.size() + " amigos conectados.");
-         
         // Updates friend list in the app
         if (this.friends == null) this.friends = new HashMap<String, PeerInterface>();
         for (int i = 0; i < size; i++) {
@@ -189,7 +183,6 @@ public class Application extends javax.swing.JFrame {
     public void connectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.put(name, friend);
-        //list.connectedUser(name);
         setNotification(name+" se ha conectado.");
         updateFriends();
     }
@@ -197,7 +190,6 @@ public class Application extends javax.swing.JFrame {
     public void disconnectedUser(PeerInterface friend) throws RemoteException {
         String name = friend.getUser();
         this.friends.remove(name);
-        //list.disconnectedUser(name);
         setNotification(name+" se ha desconectado.");
         updateFriends();
     }
@@ -209,28 +201,33 @@ public class Application extends javax.swing.JFrame {
 
     public void startChat(String friend) {
         PeerInterface friendInt;
+        ChatFrame chat;
 
-        //if(chatsOn.isEmpty() || !chatsOn.containsKey(friend)){
+        if(chatsOn.isEmpty() || !chatsOn.containsKey(friend)){
             friendInt = (PeerInterface) friends.get(friend);
 
-            ChatFrame chat = new ChatFrame(this, friendInt);
+            chat = new ChatFrame(this, friendInt);
             chat.setVisible(true);
 
             chatsOn.put(friend, chat);
-       // }else{
-            /*
-            ChatFrame chat = chatsOn.get(friend);
-            if(!chat.isVisible()){
-                chat.setVisible(true);
-            } */
-      //  }
-    }
+       }else{
+            chat = chatsOn.get(friend);
 
+            if(chat.isChatClosed()){
+                chat.openChat();
+            }
+        }
+    }
+/*
     public void startChat(PeerInterface friend) throws RemoteException { //llamada desde el amigo
-        ChatFrame chat = new ChatFrame(this, friend);
-        chat.setVisible(true);
-    }
+        ChatFrame chat;
+        String friendName = friend.getUser();
 
+        if(chatsOn.isEmpty() || !chatsOn.containsKey(friendName)){
+            //
+        }
+    }
+*/
     public void sendMessage(PeerInterface friend, String message){
         
         try{
@@ -245,17 +242,19 @@ public class Application extends javax.swing.JFrame {
     // llega desde la interfaz del amigo, se busca y se abre el chat
         String friendName = friend.getUser();
         ChatFrame chat;
-        if(chatsOn.isEmpty() || !chatsOn.containsKey(friend)){
 
+        if(chatsOn.isEmpty() || !chatsOn.containsKey(friendName)){
             chat = new ChatFrame(this, friend);
             chat.setVisible(true);
 
             chatsOn.put(friendName, chat);
         }else{
             chat = (ChatFrame) chatsOn.get(friendName);
+            if(chat.isChatClosed()){
+                chat.openChat();
+            }
         }
         chat.appendMessage(msg);
-
     }
     
     @SuppressWarnings("unchecked")
