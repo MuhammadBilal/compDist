@@ -17,7 +17,7 @@ public class ListPanel extends javax.swing.JPanel {
                 String userSelected = JListFriends.getSelectedValue().toString();
                 System.out.println("INICIADO CHAT CON: "+userSelected);
 
-                
+                app.startChat(userSelected);
             }
 
         });

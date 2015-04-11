@@ -19,6 +19,7 @@ public class Application extends javax.swing.JFrame {
 
     public Color blueBackground = new Color(18, 15, 102);
     private HashMap<String, PeerInterface> friends;
+    private HashMap<String, ChatFrame> chatsOn;
     private String user;
     
     public Application() {
@@ -32,6 +33,7 @@ public class Application extends javax.swing.JFrame {
         this.validate();
 
         this.friends = new HashMap<>();
+        this.chatsOn = new HashMap<>();
     }
 
     public void startClient(String user, String pass){
@@ -197,16 +199,22 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void startChat(String friend) {
-        PeerInterface friendInt = (PeerInterface) friends.get(friend);
+        PeerInterface friendInt;
 
-        ChatFrame chat = new ChatFrame(this, friendInt);
-        chat.setVisible(true);
-        // si se le da mas de una vez abre mas ventanas? - corregir
-        try{
-            friendInt.startChat(peerObj);
-        }catch(Exception e){
-            System.out.println("Exception: no se pudo abrir ventana de chat a otro peer: "+e);
-        }
+        //if(chatsOn.isEmpty() || !chatsOn.containsKey(friend)){
+            friendInt = (PeerInterface) friends.get(friend);
+
+            ChatFrame chat = new ChatFrame(this, friendInt);
+            chat.setVisible(true);
+
+            chatsOn.put(friend, chat);
+       // }else{
+            /*
+            ChatFrame chat = chatsOn.get(friend);
+            if(!chat.isVisible()){
+                chat.setVisible(true);
+            } */
+      //  }
     }
 
     public void startChat(PeerInterface friend) throws RemoteException { //llamada desde el amigo

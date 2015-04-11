@@ -4,17 +4,37 @@ import java.awt.Color;
 
 public class ChatFrame extends javax.swing.JFrame {
 
-    Application app;
-    PeerInterface peer;
+    private Application app;
+    private PeerInterface peer;
+    //private boolean isVisible;
 
     public ChatFrame(Application app, PeerInterface peer) {
         initComponents();
+
         this.setLocationRelativeTo(null); // center of the screen
         this.getContentPane().setBackground(new Color(18, 15, 102));
         this.txtMsg.requestFocus();
 
         this.app = app;
         this.peer = peer;
+        try{
+            labelUsername.setText(peer.getUser());
+        }catch(Exception e){}
+        /*
+        this.addWindowListener(new java.awt.event.WindowAdapter(){
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                visible(false);
+            }
+        });*/
+    }
+
+    private void txtMsgActionPerformed(java.awt.event.ActionEvent evt){
+        String message = txtMsg.getText();
+
+        if(message != null && !message.equals("")){
+            app.sendMessage(peer, message);
+        }
     }
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
@@ -24,8 +44,14 @@ public class ChatFrame extends javax.swing.JFrame {
             app.sendMessage(peer, message);
         }
     }//GEN-LAST:event_btnSendActionPerformed
+    /*
+    public void visible(boolean b){
+        this.setVisible(b);
+        isVisible = false;
+    }
 
-
+    public boolean isVisible(){ return isVisible; }
+    */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -33,8 +59,8 @@ public class ChatFrame extends javax.swing.JFrame {
         areaChat = new javax.swing.JTextArea();
         btnSend = new javax.swing.JButton();
         txtMsg = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        labelUsername = new javax.swing.JLabel();
+        labelMeteorIcon = new javax.swing.JLabel();
 
         setTitle("Ventana chat");
         setBackground(new java.awt.Color(18, 15, 102));
@@ -58,11 +84,11 @@ public class ChatFrame extends javax.swing.JFrame {
         txtMsg.setFont(new java.awt.Font("Futura", 0, 13)); // NOI18N
         txtMsg.setForeground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("NOMBRE_AMIGO");
+        labelUsername.setFont(new java.awt.Font("Futura", 0, 18)); // NOI18N
+        labelUsername.setForeground(new java.awt.Color(255, 255, 255));
+        //labelUsername.setText("NOMBRE_AMIGO");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/media/meteor.png")); // NOI18N
+        labelMeteorIcon.setIcon(new javax.swing.ImageIcon("media/meteor.png")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,9 +104,9 @@ public class ChatFrame extends javax.swing.JFrame {
                         .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel2)
+                        .addComponent(labelMeteorIcon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
+                        .addComponent(labelUsername)
                         .addGap(0, 293, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -89,10 +115,10 @@ public class ChatFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(labelMeteorIcon)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel1)))
+                        .addComponent(labelUsername)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -108,8 +134,8 @@ public class ChatFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaChat;
     private javax.swing.JButton btnSend;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel labelUsername;
+    private javax.swing.JLabel labelMeteorIcon;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtMsg;
     // End of variables declaration//GEN-END:variables
