@@ -14,9 +14,10 @@ public class ListPanel extends javax.swing.JPanel {
 
         JListFriends.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt){
-                String userSelected = JListFriends.getSelectedValue().toString();
-
-                app.startChat(userSelected);
+                if(!app.noFriendsOnline()){ 
+                    String userSelected = JListFriends.getSelectedValue().toString();
+                    app.startChat(userSelected); 
+                }
             }
 
         });

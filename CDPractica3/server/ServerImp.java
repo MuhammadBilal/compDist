@@ -46,24 +46,21 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
                for(int i=0; i < friends.size(); i++){
 
                   friendName = friends.get(i).getName();
-                  System.out.print("NOMBRE AMIGO #"+i+" "+friendName);
                   
                   if(friendsOnline.containsKey(friendName)){
-                     System.out.print("\t [ONLINE]");
                      peer = (PeerInterface) friendsOnline.get(friendName);
                      friendlist.add(peer);
 
                      friend = (ClientInterface) clientList.get(friendName);
-                     friend.connectedUser(peerObj);                              // Se le pasa al clientObj del amigo la peerObj del cliente actual
+                     friend.connectedUser(peerObj);                              
                   }              
-                  System.out.print("\n");
                }
             }
 
             friendsOnline.put(user, peerObj);
 
          }else{ 
-            clientObj.receiveNotification("Aún no tienes amigos, prueba a buscar uno"); // forever alone
+            clientObj.receiveNotification("Aún no tienes amigos, prueba a buscar uno"); 
          }
 
          // Send friend list to the client
@@ -87,8 +84,6 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
    }
 
    public synchronized void unregister(ClientInterface clientObj) throws java.rmi.RemoteException {
-      //if(clientList.removeElement(clientObj)){  // este if es necesario???
-         // eliminar en los amigos la conexion - cerrar ventanas abiertas?/poner led verde en negro?
          
          String user, friendName;
          ArrayList<Client> friends;
@@ -113,9 +108,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          friendsOnline.remove(user);
          clientList.remove(user);
          System.out.println("*Finalizada sesion: "+user);
-      //}else{
-        // System.out.println("ERROR: ServerImpl;unregister : client wasn't registered.");
-      //}
+
    }
 
    public void searchUser(ClientInterface clientObj, String username) throws java.rmi.RemoteException {

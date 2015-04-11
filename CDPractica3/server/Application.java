@@ -38,7 +38,7 @@ public class Application extends javax.swing.JFrame {
         this.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                logout();
+                if(callbackObj!=null) { logout(); }
             }
         });
         
@@ -255,6 +255,10 @@ public class Application extends javax.swing.JFrame {
             }
         }
         chat.appendMessage(msg);
+    }
+
+    public boolean noFriendsOnline(){
+        return friends.isEmpty();
     }
     
     @SuppressWarnings("unchecked")
