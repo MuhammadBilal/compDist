@@ -68,6 +68,9 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface, P
 
    public void sendMessage(String msg) throws java.rmi.RemoteException {
       System.out.println("Implementar SEND MENSAJE");
+   }
 
+   public void startChat(PeerInterface friend) throws java.rmi.RemoteException {
+      clientApp.startChat(friend);
    }
 }

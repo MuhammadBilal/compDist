@@ -4,13 +4,27 @@ import java.awt.Color;
 
 public class ChatFrame extends javax.swing.JFrame {
 
+    Application app;
+    PeerInterface peer;
 
-    public ChatFrame() {
+    public ChatFrame(Application app, PeerInterface peer) {
         initComponents();
         this.setLocationRelativeTo(null); // center of the screen
         this.getContentPane().setBackground(new Color(18, 15, 102));
         this.txtMsg.requestFocus();
+
+        this.app = app;
+        this.peer = peer;
     }
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        String message = txtMsg.getText();
+
+        if(message != null && !message.equals("")){
+            app.sendMessage(peer, message);
+        }
+    }//GEN-LAST:event_btnSendActionPerformed
+
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,11 +104,6 @@ public class ChatFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        
-    }//GEN-LAST:event_btnSendActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaChat;
