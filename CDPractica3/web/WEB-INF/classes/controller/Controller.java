@@ -64,6 +64,14 @@ public class Controller extends HttpServlet {
 
             deleteAccount(username, password);
         }
+
+        // Logout request
+        else if (request.getParameter("logout_action") != null) {
+            session.removeAttribute("username");
+            session.invalidate();
+
+            gotoPage("/index.html", request, response);
+        }
     }
 
     private void login(String username, String password) throws ServletException, IOException {

@@ -47,6 +47,9 @@
             <img src='img/logo.png' id='logo'/>
         </div>
         <br>
+        <form id="change_password_form" method="post" action="/meteochat/Controller">
+            <input type="submit" value="Cerrar sesión" name="logout_action" style="background-color: #cc3333; color: white; border-radius: 5px; margin-bottom: 20px;"/>
+        </form>
         <center>
             <h2 style="color: white">Bienvenido ${sessionScope.username}!</h2>
             <div id="contenido">
