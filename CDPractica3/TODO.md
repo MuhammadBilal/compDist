@@ -1,6 +1,5 @@
 ## TODO
 
- - buscar por nombre y mandar petición
  - comprobar en server si alguien se ha ido sin logout
 
 ### Cliente
@@ -19,3 +18,4 @@
  - Grupo de amigos de cada cliente
  - Notificar al grupo del conectado
  - Enviar al cliente la lista de amigos conectados
+ - buscar por nombre y mandar petición

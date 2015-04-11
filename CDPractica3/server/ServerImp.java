@@ -154,11 +154,7 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
 
       if ( clientList.containsKey(username) ) { // connected to server
          ClientInterface clientNotificate = (ClientInterface) clientList.get(username);
-         clientNotificate.connectedUser((PeerInterface) clientObj);
-      }
-
-      if ( clientList.containsKey(clientTo) ) { // connected to server
-         ClientInterface clientNotificate = (ClientInterface) clientList.get(username);
+         clientObj.connectedUser((PeerInterface) clientNotificate);
          clientNotificate.connectedUser((PeerInterface) clientObj);
       }
    }
