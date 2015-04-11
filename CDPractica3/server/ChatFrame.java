@@ -1,6 +1,8 @@
 
 
 import java.awt.Color;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.DefaultCaret.*;
 
 public class ChatFrame extends javax.swing.JFrame {
 
@@ -17,6 +19,10 @@ public class ChatFrame extends javax.swing.JFrame {
 
         this.app = app;
         this.peer = peer;
+
+        DefaultCaret caret = (DefaultCaret) areaChat.getCaret();  // automatic scroll down
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);      
+
         try{
             labelUsername.setText(peer.getUser());
         }catch(Exception e){}
@@ -29,12 +35,17 @@ public class ChatFrame extends javax.swing.JFrame {
         });*/
     }
 
+    public void appendMessage(String msg){
+        areaChat.append(msg+"\n");
+    }
+
     private void txtMsgActionPerformed(java.awt.event.ActionEvent evt){
         String message = txtMsg.getText();
 
         if(message != null && !message.equals("")){
             app.sendMessage(peer, message);
         }
+        this.txtMsg.setText("");
     }
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
@@ -43,7 +54,9 @@ public class ChatFrame extends javax.swing.JFrame {
         if(message != null && !message.equals("")){
             app.sendMessage(peer, message);
         }
+        this.txtMsg.setText("");
     }//GEN-LAST:event_btnSendActionPerformed
+   
     /*
     public void visible(boolean b){
         this.setVisible(b);

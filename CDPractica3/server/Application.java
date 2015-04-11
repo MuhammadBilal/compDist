@@ -34,6 +34,14 @@ public class Application extends javax.swing.JFrame {
 
         this.friends = new HashMap<>();
         this.chatsOn = new HashMap<>();
+
+        this.addWindowListener(new java.awt.event.WindowAdapter(){
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                logout();
+            }
+        });
+        
     }
 
     public void startClient(String user, String pass){
@@ -223,7 +231,30 @@ public class Application extends javax.swing.JFrame {
     }
 
     public void sendMessage(PeerInterface friend, String message){
-        System.out.println("IMPLEMENTAR");
+        
+        try{
+            friend.sendMessage(peerObj, message);
+            receiveMessage(friend, message);
+        }catch(Exception e){
+            System.out.println("Exception sendMessage: "+e.getMessage());
+        }
+    }
+
+    public void receiveMessage(PeerInterface friend, String msg) throws RemoteException { 
+    // llega desde la interfaz del amigo, se busca y se abre el chat
+        String friendName = friend.getUser();
+        ChatFrame chat;
+        if(chatsOn.isEmpty() || !chatsOn.containsKey(friend)){
+
+            chat = new ChatFrame(this, friend);
+            chat.setVisible(true);
+
+            chatsOn.put(friendName, chat);
+        }else{
+            chat = (ChatFrame) chatsOn.get(friendName);
+        }
+        chat.appendMessage(msg);
+
     }
     
     @SuppressWarnings("unchecked")

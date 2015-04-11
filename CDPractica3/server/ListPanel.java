@@ -15,7 +15,6 @@ public class ListPanel extends javax.swing.JPanel {
         JListFriends.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt){
                 String userSelected = JListFriends.getSelectedValue().toString();
-                System.out.println("INICIADO CHAT CON: "+userSelected);
 
                 app.startChat(userSelected);
             }
@@ -57,18 +56,6 @@ public class ListPanel extends javax.swing.JPanel {
             public Object getElementAt(int i) { return names[i]; }
         });
         jScrollPane1.setViewportView(JListFriends);
-    }
-    
-    public void disconnectedUser(String name) {
-        System.out.println("Implementar usuario desconectado -> " + name);
-    }
-
-    public void connectedUser(String name) {
-        System.out.println("Implementar usuario conectado -> " + name);
-    }
-
-    public void notification(String message) {
-        System.out.println("Implementar notificacion -> " + message);
     }
 
     public void setNotification(String notification){

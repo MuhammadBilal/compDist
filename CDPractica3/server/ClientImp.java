@@ -66,8 +66,8 @@ public class ClientImp extends UnicastRemoteObject implements ClientInterface, P
       clientApp.setError(error);
    }
 
-   public void sendMessage(String msg) throws java.rmi.RemoteException {
-      System.out.println("Implementar SEND MENSAJE");
+   public void sendMessage(PeerInterface friend, String msg) throws java.rmi.RemoteException {
+      clientApp.receiveMessage(friend, msg);
    }
 
 }
