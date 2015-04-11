@@ -160,6 +160,7 @@ public class Application extends javax.swing.JFrame {
         //System.out.println("** Debug: " + friendlist.size() + " amigos conectados.");
          
         // Updates friend list in the app
+        if (this.friends == null) this.friends = new HashMap<String, PeerInterface>();
         for (int i = 0; i < size; i++) {
             PeerInterface peer = (PeerInterface) friendlist.get(i);
             name = peer.getUser();
