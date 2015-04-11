@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public interface DAOInt {
 
    public void newRequest(String clientFrom, String clientTo);
+   public void deleteRequest(String clientFrom, String clientTo);
+   public void newFriend(String clientFrom, String clientTo);
    public ArrayList<Client> getRequests(String clientTo);
    public ArrayList<Client> getFriends(Client client);
    public ArrayList<Client> getFriends(String clientName);

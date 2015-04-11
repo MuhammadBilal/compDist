@@ -24,11 +24,9 @@ public class DAOImpl implements DAOInt {
    }
 
    // Methods
-   public ArrayList<Client> getFriends(Client client){ // polymorph
-      return getFriends(client.getName());
-   }
 
-   public void newRequest(String clientFrom, String clientTo) {Connection con = null;
+   public void newRequest(String clientFrom, String clientTo) {
+      Connection con = null;
       Statement stm = null;
 
       try{
@@ -39,6 +37,60 @@ public class DAOImpl implements DAOInt {
          stm = con.createStatement();
 
          stm.execute("INSERT INTO requests values ('"+clientFrom+"','"+clientTo+"');");
+
+         con.commit();
+      }catch(SQLException e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
+   }
+
+   public void newFriend(String clientFrom, String clientTo) {
+      Statement stm = null;
+      Connection con = null;
+
+      try{
+         controller = new DBController();
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+
+         stm = con.createStatement();
+
+         boolean executed = stm.execute("DELETE FROM requests WHERE clientFrom ='"+clientFrom+"' AND clientTo='"+clientTo+"';");
+         stm.execute("INSERT INTO friends values ('"+clientFrom+"','"+clientTo+"');");
+         stm.execute("INSERT INTO friends values ('"+clientTo+"','"+clientFrom+"');");
+         
+         con.commit();
+      }catch(SQLException e){
+         System.out.println("ERROR: error realizando la transaccion:\n"+e.getMessage());
+      }finally{
+         try{
+            stm.close();
+            con.close();
+         }catch(SQLException e){
+            System.out.println("ERROR: No se pudo cerrar la conexion con la BD:\n"+e.getMessage());
+         }
+      }
+   }
+
+   public void deleteRequest(String clientFrom, String clientTo) {
+      Statement stm = null;
+      Connection con = null;
+
+      try{
+         controller = new DBController();
+         con = controller.getConnection();
+         con.setAutoCommit(false);
+
+         stm = con.createStatement();
+
+         boolean executed = stm.execute("DELETE FROM requests WHERE clientFrom ='"+clientFrom+"' AND clientTo='"+clientTo+"';");
 
          con.commit();
       }catch(SQLException e){
@@ -90,6 +142,10 @@ public class DAOImpl implements DAOInt {
       if (requests.isEmpty()) return null;
 
       return requests;
+   }
+
+   public ArrayList<Client> getFriends(Client client){ // polymorph
+      return getFriends(client.getName());
    }
 
    public ArrayList<Client> getFriends(String clientName){

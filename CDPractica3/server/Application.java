@@ -121,6 +121,22 @@ public class Application extends javax.swing.JFrame {
         this.list.setError(error);
     }
 
+    public void acceptedRequest(String username) {
+        try {
+            h.acceptedRequest(callbackObj, username);
+        } catch (Exception e) {
+            System.out.println("Exeption at acceptedRequest: "+ e.getMessage());
+        }
+    }
+
+    public void rejectedRequest(String username) {
+        try {
+            h.rejectedRequest(callbackObj, username);
+        } catch (Exception e) {
+            System.out.println("Exeption at rejectedRequest: "+ e.getMessage());
+        }
+    }
+
     public void updateFriendList(ArrayList<PeerInterface> friendlist) throws RemoteException {
         
         int size = friendlist.size();

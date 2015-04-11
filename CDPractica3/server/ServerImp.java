@@ -145,4 +145,27 @@ public class ServerImp extends UnicastRemoteObject implements ServerInterface {
          clientObj.receiveNotification("No existe el usuario "+username);
       }
    }
+
+   public void acceptedRequest(ClientInterface clientObj, String username) throws java.rmi.RemoteException {
+      String clientTo = clientObj.getUser();
+
+      DAO.newFriend(username, clientTo);
+      DAO.deleteRequest(username, clientTo);
+
+      if ( clientList.containsKey(username) ) { // connected to server
+         ClientInterface clientNotificate = (ClientInterface) clientList.get(username);
+         clientNotificate.connectedUser((PeerInterface) clientObj);
+      }
+
+      if ( clientList.containsKey(clientTo) ) { // connected to server
+         ClientInterface clientNotificate = (ClientInterface) clientList.get(username);
+         clientNotificate.connectedUser((PeerInterface) clientObj);
+      }
+   }
+
+   public void rejectedRequest(ClientInterface clientObj, String username) throws java.rmi.RemoteException {
+      String clientTo = clientObj.getUser();
+
+      DAO.deleteRequest(username, clientTo);
+   }
 }

@@ -15,7 +15,7 @@ public class RequestFrame extends javax.swing.JFrame {
 
     public RequestFrame(Application a, String client) {
         initComponents();
-        this.setLocationRelativeTo(null); // center
+        this.setLocationRelativeTo(null); // center of the screen
         this.app = a;
         this.clientFrom = client;
         this.textLabel.setText(client + " quiere ser tu amigo!");
@@ -23,13 +23,13 @@ public class RequestFrame extends javax.swing.JFrame {
     }
 
     private void AceptButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        System.out.println("Peticion aceptada");
-        this.setVisible(false);
+        app.acceptedRequest(clientFrom);
+        this.dispose();
     }                                           
 
     private void RejectButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        System.out.println("Peticion rechazada");
-        this.setVisible(false);
+        app.rejectedRequest(clientFrom);
+        this.dispose();
     }  
 
     @SuppressWarnings("unchecked")
