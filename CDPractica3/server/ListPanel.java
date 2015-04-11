@@ -1,4 +1,5 @@
 
+import java.awt.event.*;
 
 public class ListPanel extends javax.swing.JPanel {
 
@@ -10,6 +11,16 @@ public class ListPanel extends javax.swing.JPanel {
         this.labelError.setText("");
         this.labelAlert.setText("");
         this.labelNombreUsuario.setText(user);
+
+        JListFriends.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evt){
+                String userSelected = JListFriends.getSelectedValue().toString();
+                System.out.println("INICIADO CHAT CON: "+userSelected);
+
+                
+            }
+
+        });
     }
 
    private void txtSearchUserActionPerformed(java.awt.event.ActionEvent evt) {                                              
