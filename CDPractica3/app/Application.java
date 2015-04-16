@@ -20,7 +20,7 @@ public class Application extends javax.swing.JFrame {
     public Color blueBackground = new Color(18, 15, 102);
     private HashMap<String, PeerInterface> friends;
     private HashMap<String, ChatFrame> chatsOn;
-    private String user;
+    public String user;
     
     public Application() {
         initComponents();

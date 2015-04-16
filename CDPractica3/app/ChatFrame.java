@@ -57,23 +57,23 @@ public class ChatFrame extends javax.swing.JFrame {
     }
 
     private void txtMsgActionPerformed(java.awt.event.ActionEvent evt){
-        String message = txtMsg.getText();
-
-        if(message != null && !message.equals("")){
-            app.sendMessage(peer, message);
-        }
-        this.txtMsg.setText("");
+        sendMessage();
     }
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        sendMessage();
+    }//GEN-LAST:event_btnSendActionPerformed
+
+    private void sendMessage() {
         String message = txtMsg.getText();
         if(connected){
             if(message != null && !message.equals("")){
+                message = app.user + ": " + message;
                 app.sendMessage(peer, message);
             }
             this.txtMsg.setText("");
          }
-    }//GEN-LAST:event_btnSendActionPerformed
+    }
    
     public void closeChat(){
         setChatClosed(true);
