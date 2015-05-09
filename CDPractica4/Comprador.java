@@ -18,7 +18,8 @@ public class Comprador extends Agent {
 
 		cargarDatos();
 
-		buscarSubastas(10000);
+		//buscarSubastas(10000);
+		
 	}
 
 	protected void takeDown(){
