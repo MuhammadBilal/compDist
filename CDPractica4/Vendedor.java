@@ -19,7 +19,6 @@ public class Vendedor extends Agent {
 	private final Integer DELAY = 10000;
 
 	protected void setup(){
-
 		nuevaSubasta("Macbeth", 20, 3);
 
 	} // END SETUP
@@ -78,7 +77,7 @@ public class Vendedor extends Agent {
 			}
 		}catch(Exception e){
 			System.out.println(getLocalName()+"Error realizando la busqueda de compradores: "+e.getMessage());
-		}
+		}						// Mira si hay agentes registrados para la subasta y los añade
 	}
 
 	private void nuevaPuja(Subasta subasta){
@@ -95,8 +94,29 @@ public class Vendedor extends Agent {
 
 		// Tiempo de espera por las pujas 
 		mensajeCFP.setReplyByDate(new Date(System.currentTimeMillis() + 10000));
-		addBehaviour(new GestorRespuestas(this, mensajeCFP, subasta));
+		addBehaviour(new GestorRespuestas(this, mensajeCFP, subasta));								
 	}
+
+	private void finalizarSubasta(Subasta subasta){
+		System.out.println(getLocalName()+": Subasta por el libro '"+subasta.getTituloLibro()+"' FINALIZADA");	
+		System.out.println(getLocalName()+": Ganador de la subasta: "+subasta.getGanador().getLocalName());	
+
+		ACLMessage mensaje = new ACLMessage(ACLMessage.REQUEST);
+		mensaje.setLanguage("Español");
+		mensaje.setContent("GANADA");
+		mensaje.addReceiver(subasta.getGanador());
+		send(mensaje);															// Envia un mensaje al ganador 
+
+		mensaje.clearAllReceiver();
+
+		for(AID idComprador : subasta.getParticipantes()){
+			mensaje.addReceiver(idComprador);
+		}
+
+		mensaje.setPerformative(ACLMessage.INFORM);
+		mensaje.setContent("FINALIZADA");
+		send(mensaje);															// Envia un mensaje con FINALIZADA a todos los participantes
+	}	
 
 	// COMPORTAMIENTOS ===============================================================
 
@@ -157,34 +177,11 @@ public class Vendedor extends Agent {
 					aceptadas.add(respuesta);
 				}
 			}
-			/*
-			if(nPujas == 1){											// Solo ha pujado un comprador - gana la subasta - FIN
 
-				for(Object resp : respuestas){
-					ACLMessage mensaje = (ACLMessage) resp;
-
-					if(mensaje.getPerformative() == ACLMessage.PROPOSE){
-						ACLMessage respuesta = mensaje.createReply();
-
-						if(mensaje.getSender().equals(subasta.getGanador())){
-							// GANADOR - ENVIAR REQUEST
-							respuesta.setPerformative(ACLMessage.REQUEST);
-							respuesta.setContent("Enhorabuena ha ganado la subasta!");
-							send(respuesta);
-						}
-
-						respuesta.setPerformative(ACLMessage.INFORM);
-						respuesta.setContent("La subasta ha finalizado.");
-						aceptadas.add(respuesta);
-					}
-				}
-
-			}else*/
-			if(nPujas == 0){
+			if(nPujas  <= 1){
 				subasta.terminada(true);
 			}
 		}
-
 	}
 
 	private class GestorSubasta extends TickerBehaviour {
@@ -204,8 +201,7 @@ public class Vendedor extends Agent {
 																				// en la puja siguiente
 				subasta.incrementar();											// Incrementa el importe del libro para la siguiente puja
 			}else{		
-				System.out.println(myAgent.getLocalName()+": Subasta por el libro '"+subasta.getTituloLibro()+"' FINALIZADA");	
-				System.out.println(myAgent.getLocalName()+": Ganador de la subasta: "+subasta.getGanador().getLocalName());													
+				Vendedor.this.finalizarSubasta(subasta);											
 				stop();															// Termina el comportamiento
 			}
 		}

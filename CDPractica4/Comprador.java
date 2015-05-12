@@ -10,16 +10,24 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.*;
 import jade.proto.ContractNetResponder;
 
+import java.util.ArrayList;
 
 public class Comprador extends Agent {
 
+	public ArrayList<String> subastas;
+	private GUIComprador gui;
 
 	protected void setup() {
+		gui = new GUIComprador(this);
+		gui.setTitle("Comprador "+getLocalName());
+		gui.setVisible(true);
+
+		this.subastas = new ArrayList();
 
 		//String libro = "Macbeth";
 
-		//nuevaSubasta(libro, 30);	
-		cargaDatos();
+		//cargaDatos();
+		
 	}
 
 	protected void takeDown(){
@@ -43,7 +51,7 @@ public class Comprador extends Agent {
 		
 	}
 
-	private void nuevaSubasta(String libro, Integer credito){
+	public void nuevaSubasta(String libro, Integer credito){
 
 		ServiceDescription servicio = new ServiceDescription();
 		servicio.setType(libro);
@@ -55,18 +63,19 @@ public class Comprador extends Agent {
 
 		try {																
 			DFService.register(this, descripcion);								// Registra el servicio
+			subastas.add(libro);
 		}catch(FIPAException e){
 			e.printStackTrace();
 		}
-		/*
-		ACLMessage mensaje = blockingReceive();
-		if(mensaje != null){
-			System.out.println(getLocalName()+": Recibido mensaje: "+mensaje.getContent());
-		}
-		*/
+
 		MessageTemplate plantilla = ContractNetResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
 
 		addBehaviour(new GestorRespuestas(this, plantilla, credito));
+		//addBehaviour(new GestorMensajes(this, 500, subasta));
+	}
+
+	private void finalizadaSubasta(Subasta subasta){
+
 	}
 
 	// COMPORTAMIENTOS ==========================================================
@@ -97,6 +106,52 @@ public class Comprador extends Agent {
 		protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) { 
 			System.out.println(myAgent.getLocalName()+": PUJO");
 			return accept;
+		}
+	}
+
+	private class GestorMensajes extends TickerBehaviour {
+
+		private MessageTemplate plantillaSTART;
+		private MessageTemplate plantillaGANADA;
+		private MessageTemplate plantillaFIN;
+		private Subasta subasta;
+
+		public GestorMensajes(Agent agente, Integer delay, Subasta subasta){
+
+			super(agente, delay);
+			this.subasta = subasta;
+
+			MessageTemplate filtroInform = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+			MessageTemplate filtroRequest = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+			MessageTemplate filtroGanada = MessageTemplate.MatchContent("GANADA");
+			MessageTemplate filtroIdioma = MessageTemplate.MatchLanguage("Español");
+			MessageTemplate filtroFin = MessageTemplate.MatchContent("FINALIZADA");
+
+			plantillaSTART = MessageTemplate.and(plantillaSTART, filtroInform);
+			plantillaGANADA = MessageTemplate.and(filtroGanada, filtroIdioma);
+			plantillaGANADA = MessageTemplate.and(plantillaGANADA, filtroRequest);
+			plantillaFIN = MessageTemplate.and(plantillaFIN, filtroFin);
+		}
+
+		public void onTick(){
+
+			ACLMessage mensajeSTART = receive(plantillaSTART);
+			ACLMessage mensajeGANADA = receive(plantillaGANADA);
+			ACLMessage mensajeFIN = receive(plantillaFIN);
+
+			if(mensajeSTART != null){
+				System.out.println(myAgent.getLocalName()+": RECIBIDO: "+mensajeSTART.getContent());
+			}
+
+			if(mensajeGANADA != null){
+				System.out.println(myAgent.getLocalName()+": He ganado la subasta!");
+			}
+
+			if(mensajeFIN != null){
+				System.out.println(myAgent.getLocalName()+": SUBASTA FINALIZA");
+				Comprador.this.finalizadaSubasta(subasta);
+				stop();
+			}
 		}
 
 	}
