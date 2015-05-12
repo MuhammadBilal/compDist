@@ -16,12 +16,32 @@ public class Comprador extends Agent {
 
 	protected void setup() {
 
-		String libro = "Macbeth";
+		//String libro = "Macbeth";
 
-		nuevaSubasta(libro, 30);	
+		//nuevaSubasta(libro, 30);	
+		cargaDatos();
+	}
+
+	protected void takeDown(){
+		System.out.println(getLocalName()+": Me voy de la casa de subastas!");
 	}
 
 	// FUNCIONES ===============================================================
+
+	private void cargaDatos(){
+		Object[] args = this.getArguments();
+		String titulo;
+		Integer precioMax;
+
+		if(args != null && args.length == 2){
+			titulo = (String) args[0];
+			precioMax = Integer.parseInt((String) args[1]);
+			nuevaSubasta(titulo, precioMax);
+		}else{
+			System.out.println("efnaofbjaiksfaobvdoui");
+		}
+		
+	}
 
 	private void nuevaSubasta(String libro, Integer credito){
 
@@ -71,11 +91,11 @@ public class Comprador extends Agent {
 		}
 
 		protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject){
-			System.out.println(myAgent.getLocalName()+": La puja excede el credito maximo de compra");
+			System.out.println(myAgent.getLocalName()+": La puja excede mi credito maximo de compra");
 		}
 
 		protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) { 
-			System.out.println(myAgent.getLocalName()+": PUJA");
+			System.out.println(myAgent.getLocalName()+": PUJO");
 			return accept;
 		}
 

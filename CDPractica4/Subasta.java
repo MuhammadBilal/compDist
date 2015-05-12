@@ -30,6 +30,10 @@ public class Subasta {
 		numeroPujas++;
 	}
 
+	public void eliminarParticipante(AID participante){
+		this.participantes.remove(participante);
+	}
+
 	// GETTERS && SETTERS =====================================================
 
 	public String getTituloLibro(){ 			return tituloLibro; }

@@ -57,11 +57,12 @@ public class Vendedor extends Agent {
 		}else{
 			System.out.println(getLocalName()+": Todavia no hay suficientes participantes para iniciar una subasta");
 		}
-
+		System.out.println("Creada una subasta por el libro '"+libro+"'\n Precio salida: "+precio+" Incrementos: "+incremento);
 		addBehaviour(new GestorSubasta(this, DELAY, subasta));
 	}
 
 	private void buscarCompradores(Subasta subasta){
+		System.out.println(getLocalName()+": Comprobando si ha entrado gente nueva en la sala..");
 		try{																	// Busca a todos los compradores interesados en esta subasta
 			DFAgentDescription[] resultado = DFService.search(this, subasta.getDescripcion());
 
@@ -92,7 +93,7 @@ public class Vendedor extends Agent {
 		mensajeCFP.setProtocol(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
 		mensajeCFP.setContent("Subasta en marcha - Precio actual: "+subasta.getPrecioActual());
 
-		// Tiempo de espera por las pujas - 10 segundos hasta realizar la siguiente
+		// Tiempo de espera por las pujas 
 		mensajeCFP.setReplyByDate(new Date(System.currentTimeMillis() + 10000));
 		addBehaviour(new GestorRespuestas(this, mensajeCFP, subasta));
 	}
@@ -121,7 +122,9 @@ public class Vendedor extends Agent {
 		// Maneja las respuestas de fallo	- FAILURE
 		protected void handleFailure(ACLMessage fallo){
 			if(fallo.getSender().equals(myAgent.getAMS())){
-				System.out.println("AMS: Este cliente no es accesible o no existe");
+				System.out.println("AMS: Este cliente ("+fallo.getSender()+") no es accesible o no existe");
+				subasta.eliminarParticipante(fallo.getSender());
+				System.out.println(fallo.getSender()+" ha sido expulsado de la sala de subastas");
 			} else{
 				System.out.println("Se ha producido un error en: "+fallo.getSender().getLocalName());
 			}
@@ -195,13 +198,14 @@ public class Vendedor extends Agent {
 
 		public void onTick(){
 			if(!subasta.terminada()){	
-				System.out.println(myAgent.getLocalName()+": NUEVA PUJA");					
+				System.out.println(myAgent.getLocalName()+": NUEVA PUJA\t-\tNUEVO PRECIO: "+subasta.getPrecioActual());					
 				Vendedor.this.nuevaPuja(subasta);								// Se realiza una nueva puja
 				Vendedor.this.buscarCompradores(subasta);						// Comprueba si han entrado nuevos compradores que participaran
 																				// en la puja siguiente
 				subasta.incrementar();											// Incrementa el importe del libro para la siguiente puja
 			}else{		
-				System.out.println(myAgent.getLocalName()+": Subasta por el libro '"+subasta.getTituloLibro()+"' FINALIZADA");														
+				System.out.println(myAgent.getLocalName()+": Subasta por el libro '"+subasta.getTituloLibro()+"' FINALIZADA");	
+				System.out.println(myAgent.getLocalName()+": Ganador de la subasta: "+subasta.getGanador().getLocalName());													
 				stop();															// Termina el comportamiento
 			}
 		}
