@@ -5,66 +5,79 @@ import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.domain.DFService;
+import jade.domain.FIPANames;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.*;
+import jade.proto.ContractNetResponder;
+
 
 public class Comprador extends Agent {
 
-	private String tituloLibro;													// Titulo del libro que desea adquirir
-	private int precioMax;														// Precio maximo del libro por el que esta dispuesto a pujar
-	private AID[] vendedores;													// Lista de los vendedores
 
-	protected void setup(){
+	protected void setup() {
 
-		cargarDatos();
+		String libro = "Macbeth";
 
-		//buscarSubastas(10000);
-		
+		nuevaSubasta(libro, 30);	
 	}
 
-	protected void takeDown(){
-		System.out.println(getLocalName()+": Finaliza su ejecucion");
-	}
+	// FUNCIONES ===============================================================
 
-	// METODOS =================================================================
+	private void nuevaSubasta(String libro, Integer credito){
 
-	public void cargarDatos(){
-		Object[] args = this.getArguments();
+		ServiceDescription servicio = new ServiceDescription();
+		servicio.setType(libro);
+		servicio.setName("Subasta "+libro);
 
-		if(args != null && args.length == 2){
-			this.tituloLibro = (String) args[0];
-			this.precioMax = Integer.parseInt((String) args[1]);
-		}else{
-			System.out.println("ERROR: Introducir por argumento titulo e importe maximo");
+		DFAgentDescription descripcion = new DFAgentDescription();
+		descripcion.addLanguages("Español");
+		descripcion.addServices(servicio);
+
+		try {																
+			DFService.register(this, descripcion);								// Registra el servicio
+		}catch(FIPAException e){
+			e.printStackTrace();
 		}
+		/*
+		ACLMessage mensaje = blockingReceive();
+		if(mensaje != null){
+			System.out.println(getLocalName()+": Recibido mensaje: "+mensaje.getContent());
+		}
+		*/
+		MessageTemplate plantilla = ContractNetResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
+
+		addBehaviour(new GestorRespuestas(this, plantilla, credito));
 	}
 
-	private void buscarSubastas(int periodo){									// Busca subastas cada x segundos
-		addBehaviour(new TickerBehaviour(this, periodo){
-			protected void onTick(){
-				DFAgentDescription plantilla = new DFAgentDescription();
-				ServiceDescription servicio = new ServiceDescription();
+	// COMPORTAMIENTOS ==========================================================
 
-				servicio.setType("subasta");
-				plantilla.addServices(servicio);
+	private class GestorRespuestas extends ContractNetResponder {
 
-				try{															// Busca los agentes que oferten el servicio de subasta
-					DFAgentDescription[] resultado = DFService.search(myAgent, plantilla);
+		private Integer credito;
 
-					System.out.println("Encontrados subastadores:");
-					vendedores = new AID[resultado.length];
+		public GestorRespuestas(Agent agente, MessageTemplate plantilla, Integer credito){
+			super(agente, plantilla);
+			this.credito = credito;
+		}
 
-					for(int i=0; i < resultado.length; i++){
-						vendedores[i] = resultado[i].getName();
-						System.out.println(vendedores[i].getName());
-					}
-				}catch(FIPAException e){
-					e.printStackTrace();
-				}
-			}
+		protected ACLMessage prepareResponse(ACLMessage cfp) throws NotUnderstoodException, RefuseException {
+			//System.out.println(myAgent.getLocalName()+": puja actual :"+cfp.getContent());
 
-		});
+			ACLMessage respuesta = cfp.createReply();
+			respuesta.setPerformative(ACLMessage.PROPOSE);
+			respuesta.setContent(""+credito);
+
+			return respuesta;
+		}
+
+		protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject){
+			System.out.println(myAgent.getLocalName()+": La puja excede el credito maximo de compra");
+		}
+
+		protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) { 
+			System.out.println(myAgent.getLocalName()+": PUJA");
+			return accept;
+		}
+
 	}
-
-	// COMPORTAMIENTOS =========================================================
 }
