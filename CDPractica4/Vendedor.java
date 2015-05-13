@@ -181,7 +181,7 @@ public class Vendedor extends Agent {
 		// Maneja todas las respuestas, es llamado cuando se reciben todas o se acaba el tiempo
 		protected void handleAllResponses(Vector respuestas, Vector aceptadas){
 			int nPujas = 0;
-			String pujas = getPujas(respuestas);
+			//String pujas = getPujas(respuestas);
 
 			for(Object resp : respuestas){
 				ACLMessage mensaje = (ACLMessage) resp;
@@ -193,7 +193,8 @@ public class Vendedor extends Agent {
 
 					if(puja >= subasta.getPrecioActual()){				// El credito del comprador es superior al pedido en la puja - PUJA
 						respuesta.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
-						respuesta.setContent(pujas);					// Se le envia la informacion de las pujas a cada comprador
+						// Se le envia la informacion de las pujas a cada comprador
+						respuesta.setContent(getPujas(respuestas, mensaje.getSender()));
 						System.out.println(myAgent.getLocalName()+": "+mensaje.getSender().getLocalName()+" ha pujado");
 						guiSubasta.addMensaje(mensaje.getSender().getLocalName()+" ha pujado");
 
@@ -213,18 +214,19 @@ public class Vendedor extends Agent {
 			}
 		}
 
-		private String getPujas(Vector respuestas){
+		private String getPujas(Vector respuestas, AID destinatario){
 			String pujas = "";
 
 			for(Object resp : respuestas){
 				ACLMessage mensaje = (ACLMessage) resp;
-
-				if(mensaje.getPerformative() == ACLMessage.PROPOSE){
-					int puja = Integer.parseInt(mensaje.getContent());
-					if(puja >= subasta.getPrecioActual()){
-						pujas += mensaje.getSender().getLocalName()+" PUJA";
-					}else{
-						pujas += mensaje.getSender().getLocalName()+" no ha pujado";
+				if(!mensaje.getSender().equals(destinatario)){
+					if(mensaje.getPerformative() == ACLMessage.PROPOSE){
+						int puja = Integer.parseInt(mensaje.getContent());
+						if(puja >= subasta.getPrecioActual()){
+							pujas += mensaje.getSender().getLocalName()+" PUJA\n";
+						}else{
+							pujas += mensaje.getSender().getLocalName()+" no ha pujado\n";
+						}
 					}
 				}	
 			}

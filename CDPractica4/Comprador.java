@@ -94,14 +94,14 @@ public class Comprador extends Agent {
 		}
 
 		protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject){
-			guiSubasta.addMensaje(cfp.getSender().getLocalName()+": "+cfp.getContent());
+			guiSubasta.addMensaje(reject.getContent());
 			guiSubasta.addMensaje("La puja excede mi credito maximo de compra");
 			System.out.println(myAgent.getLocalName()+": La puja excede mi credito maximo de compra");
 		}
 
 		protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) {
-			guiSubasta.addMensaje(cfp.getSender().getLocalName()+": "+cfp.getContent()); 
-			guiSubasta.addMensaje("PUJO");
+			guiSubasta.addMensaje(accept.getContent()); 
+			guiSubasta.addMensaje("Yo: PUJO");
 			System.out.println(myAgent.getLocalName()+": PUJO");
 			return accept;
 		}
