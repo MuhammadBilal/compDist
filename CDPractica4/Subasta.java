@@ -16,6 +16,10 @@ public class Subasta {
 	private DFAgentDescription descripcion;										// Descripcion del servicio
 	private ArrayList<AID> participantes;										// Participantes en la puja
 
+	public Subasta(String tituloLibro){
+		this.tituloLibro = tituloLibro;
+	}
+
 	public Subasta(String tituloLibro, Integer precioSalida, Integer incremento){
 		this.tituloLibro = tituloLibro;
 		this.precioSalida = precioSalida;

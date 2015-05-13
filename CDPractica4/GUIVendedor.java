@@ -44,7 +44,7 @@ public class GUIVendedor extends javax.swing.JFrame {
     }                                                    
 
     private void buttonSalirActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    
+        finalizar();
     }     
 
     public void nuevaSubasta(){
@@ -52,21 +52,22 @@ public class GUIVendedor extends javax.swing.JFrame {
         Integer precio;
         Integer incremento;
 
-        label.setText("");
+        labelError.setText("");
 
         libro = txtLibro.getText();
         precio = Integer.parseInt(spinnerPrecioSalida.getValue().toString());
         incremento = Integer.parseInt(spinnerIncremento.getValue().toString());
 
-        if(libro != null && libro.size() > 0){
-            for(int i = 0; i < vendedor.subastas.size(); i++) {
-                if(vendedor.subastas.get(i).getTituloLibro().equals(libro)){
-                    labelError.setText("ERROR: ya hay una subasta de ese libro");
-                    return;
-                }else{
-                    vendedor.nuevaSubasta(libro, precio, incremento);
+        if(libro != null && libro.length() > 0){
+            if(vendedor.subastas != null && vendedor.subastas.size() > 0){
+                for(int i = 0; i < vendedor.subastas.size(); i++) {
+                    if(vendedor.subastas.get(i).getTituloLibro().equals(libro)){
+                        labelError.setText("ERROR: ya hay una subasta de ese libro");
+                        return;
+                    }   
                 }
             }
+            vendedor.nuevaSubasta(libro, precio, incremento);
         }else{
             labelError.setText("ERROR: introducir un titulo válido!");
         }
