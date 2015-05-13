@@ -36,21 +36,6 @@ public class Comprador extends Agent {
 
 	// FUNCIONES ===============================================================
 
-	private void cargaDatos(){
-		Object[] args = this.getArguments();
-		String titulo;
-		Integer precioMax;
-
-		if(args != null && args.length == 2){
-			titulo = (String) args[0];
-			precioMax = Integer.parseInt((String) args[1]);
-			nuevaSubasta(titulo, precioMax);
-		}else{
-			System.out.println("efnaofbjaiksfaobvdoui");
-		}
-		
-	}
-
 	public void nuevaSubasta(String libro, Integer credito){
 
 		ServiceDescription servicio = new ServiceDescription();

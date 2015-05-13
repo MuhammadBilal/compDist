@@ -15,11 +15,16 @@ import java.util.Date;
 public class Vendedor extends Agent {
 
 	//private HashMap<Subasta, ArrayList<AID>> subastas;
-	private ArrayList<Subasta> subastas;
+	public ArrayList<Subasta> subastas;
 	private final Integer DELAY = 10000;
+	public GUIVendedor gui;
 
 	protected void setup(){
-		nuevaSubasta("Macbeth", 20, 3);
+		gui = new GUIVendedor(this);
+		gui.setTitle("Vendedor: "+getLocalName());
+		gui.setVisible(true);
+
+		//nuevaSubasta("Macbeth", 20, 3);
 
 	} // END SETUP
 
