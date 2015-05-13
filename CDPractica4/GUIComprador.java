@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.awt.event.*;
 
 public class GUIComprador extends javax.swing.JFrame {
 
@@ -7,7 +8,7 @@ public class GUIComprador extends javax.swing.JFrame {
     private javax.swing.JButton buttonNuevaSubasta;
     private javax.swing.JButton buttonSalir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList jList1;
+    private javax.swing.JList listaSubastas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelError;
     private javax.swing.JLabel labelLibro;
@@ -24,6 +25,16 @@ public class GUIComprador extends javax.swing.JFrame {
         initComponents();
 
         this.labelError.setText("");
+
+        listaSubastas.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent evt){
+                if(comprador.subastas != null && comprador.subastas.size() > 0){
+                    String nombreSubasta = listaSubastas.getSelectedValue().toString();
+                    comprador.abrirFrame(nombreSubasta);
+                }
+            }
+        });
+
         this.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent){
@@ -34,6 +45,7 @@ public class GUIComprador extends javax.swing.JFrame {
 
     private void finalizar(){
         this.comprador.takeDown();
+        this.dispose();
     }
 
     private void buttonNuevaSubastaActionPerformed(java.awt.event.ActionEvent evt) {                                                   
@@ -62,6 +74,14 @@ public class GUIComprador extends javax.swing.JFrame {
         }
     }
 
+    public void actualizarLista(String[] nombres){
+        listaSubastas.setModel(new javax.swing.AbstractListModel(){
+            public int getSize(){ return nombres.length; }
+            public Object getElementAt(int i){ return nombres[i]; }
+        });
+        jScrollPane1.setViewportView(listaSubastas);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
@@ -74,7 +94,7 @@ public class GUIComprador extends javax.swing.JFrame {
         buttonNuevaSubasta = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        listaSubastas = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         labelError = new javax.swing.JLabel();
 
@@ -108,7 +128,7 @@ public class GUIComprador extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listaSubastas);
 
         jLabel1.setText("Entrar en nueva subasta");
 

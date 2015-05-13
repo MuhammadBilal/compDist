@@ -68,7 +68,7 @@ public class Comprador extends Agent {
 		MessageTemplate plantilla = ContractNetResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
 
 		addBehaviour(new GestorRespuestas(this, plantilla, credito, subasta));
-
+		actualizarSubastas();
 		//addBehaviour(new GestorMensajes(this, 500, subasta));
 	}
 
@@ -84,6 +84,23 @@ public class Comprador extends Agent {
 		}catch(FIPAException e){
 			e.printStackTrace();
 		}
+
+		GUISubasta guiSubasta = frames.get(subasta.getTituloLibro());
+		frames.remove(subasta.getTituloLibro());
+		guiSubasta.finalizar();
+		actualizarSubastas();
+	}
+
+	public void abrirFrame(String nombreSubasta){
+		if(frames != null && frames.size() > 0 && frames.containsKey(nombreSubasta)){
+			GUISubasta guiSubasta = frames.get(nombreSubasta);
+			guiSubasta.setVisible(true);
+		}
+	}
+
+	public void actualizarSubastas(){
+		String[] nombres = subastas.toArray(new String[subastas.size()]);
+		gui.actualizarLista(nombres);
 	}
 
 	// COMPORTAMIENTOS ==========================================================
@@ -103,6 +120,7 @@ public class Comprador extends Agent {
 
 		protected ACLMessage prepareResponse(ACLMessage cfp) throws NotUnderstoodException, RefuseException {
 			//System.out.println(myAgent.getLocalName()+": puja actual :"+cfp.getContent());
+			abrirFrame(subasta.getTituloLibro());
 			guiSubasta.addMensaje(cfp.getSender().getLocalName()+": "+cfp.getContent());
 			guiSubasta.addMensaje("Mi credito para esta subasta = "+credito);
 			ACLMessage respuesta = cfp.createReply();
@@ -113,12 +131,14 @@ public class Comprador extends Agent {
 		}
 
 		protected void handleRejectProposal(ACLMessage cfp, ACLMessage propose, ACLMessage reject){
+			abrirFrame(subasta.getTituloLibro());
 			guiSubasta.addMensaje(reject.getContent());
 			guiSubasta.addMensaje("La puja excede mi credito maximo de compra");
 			System.out.println(myAgent.getLocalName()+": La puja excede mi credito maximo de compra");
 		}
 
 		protected ACLMessage handleAcceptProposal(ACLMessage cfp, ACLMessage propose, ACLMessage accept) {
+			abrirFrame(subasta.getTituloLibro());
 			guiSubasta.addMensaje(accept.getContent()); 
 			guiSubasta.addMensaje("Yo: PUJO");
 			System.out.println(myAgent.getLocalName()+": PUJO");
@@ -159,16 +179,19 @@ public class Comprador extends Agent {
 			ACLMessage mensajeFIN = receive(plantillaFIN);
 
 			if(mensajeSTART != null){
+				abrirFrame(subasta.getTituloLibro());
 				guiSubasta.addMensaje("RECIBIDO: "+mensajeSTART.getContent());
 				System.out.println(myAgent.getLocalName()+": RECIBIDO: "+mensajeSTART.getContent());
 			}
 
 			if(mensajeGANADA != null){
+				abrirFrame(subasta.getTituloLibro());
 				guiSubasta.addMensaje("He ganado la subasta!");
 				System.out.println(myAgent.getLocalName()+": He ganado la subasta!");
 			}
 
 			if(mensajeFIN != null){
+				abrirFrame(subasta.getTituloLibro());
 				guiSubasta.addMensaje("La subasta ha finalizado.");
 				System.out.println(myAgent.getLocalName()+": SUBASTA FINALIZA");
 				Comprador.this.finalizadaSubasta(subasta);

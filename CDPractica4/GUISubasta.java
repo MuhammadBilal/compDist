@@ -13,6 +13,7 @@ public class GUISubasta extends javax.swing.JFrame {
 
     private Subasta subasta;
     private Agent agente;
+    private boolean fin = false;
 
     public GUISubasta(Agent agente, Subasta subasta) {
         this.agente = agente;
@@ -25,21 +26,29 @@ public class GUISubasta extends javax.swing.JFrame {
         this.addWindowListener(new java.awt.event.WindowAdapter(){
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent){
-                finalizar();
+                cerrar();
             }
         });
     }
 
     private void buttonCerrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        
+        cerrar();
     }
 
-    private void finalizar(){
-        dispose();
+    private void cerrar(){
+        if(fin){
+            dispose();
+        }else{
+            setVisible(false);
+        }
     }
 
     public void addMensaje(String mensaje){
         this.areaMensajes.append(mensaje+"\n");
+    }
+
+    public void finalizar(){
+        this.fin = true;
     }
 
     @SuppressWarnings("unchecked")

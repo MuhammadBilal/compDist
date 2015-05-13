@@ -14,7 +14,6 @@ import java.util.Date;
 
 public class Vendedor extends Agent {
 
-	//private HashMap<Subasta, ArrayList<AID>> subastas;
 	public HashMap<String, GUISubasta> frames;
 	public ArrayList<Subasta> subastas;
 	private final Integer DELAY = 10000;
@@ -70,7 +69,9 @@ public class Vendedor extends Agent {
 		guiSubasta.addMensaje("Creada una subasta por el libro '"+libro+"'\n Precio salida: "+precio+" Incrementos: "+incremento);
 		System.out.println("Creada una subasta por el libro '"+libro+"'\n Precio salida: "+precio+" Incrementos: "+incremento);
 		subastas.add(subasta);
+		actualizarSubastas();
 		addBehaviour(new GestorSubasta(this, DELAY, subasta));
+
 	}
 
 	private void buscarCompradores(Subasta subasta){
@@ -137,7 +138,27 @@ public class Vendedor extends Agent {
 		mensaje.setPerformative(ACLMessage.INFORM);
 		mensaje.setContent("FINALIZADA");
 		send(mensaje);															// Envia un mensaje con FINALIZADA a todos los participantes
+
+		guiSubasta.finalizar();
+		frames.remove(subasta.getTituloLibro());
+		actualizarSubastas();
 	}	
+
+	public void abrirFrame(String nombreSubasta){
+		if(frames != null && frames.size() > 0 && frames.containsKey(nombreSubasta)){
+			GUISubasta guiSubasta = frames.get(nombreSubasta);
+			guiSubasta.setVisible(true);
+		}
+	}
+
+	public void actualizarSubastas(){
+		ArrayList<String> titulos = new ArrayList();
+		for(Subasta sub : subastas){
+			titulos.add(sub.getTituloLibro());
+		}
+		String[] nombres = titulos.toArray(new String[titulos.size()]);
+		gui.actualizarLista(nombres);
+	}
 
 	// COMPORTAMIENTOS ===============================================================
 
@@ -155,6 +176,7 @@ public class Vendedor extends Agent {
 		// Maneja las respuestas de fallo	- FAILURE
 		protected void handleFailure(ACLMessage fallo){
 			if(fallo.getSender().equals(myAgent.getAMS())){
+				abrirFrame(subasta.getTituloLibro());
 				guiSubasta.addMensaje("AMS: Este cliente ("+fallo.getSender()+") no es accesible o no existe");
 				System.out.println("AMS: Este cliente ("+fallo.getSender()+") no es accesible o no existe");
 				subasta.eliminarParticipante(fallo.getSender());
@@ -162,6 +184,7 @@ public class Vendedor extends Agent {
 				guiSubasta.addMensaje(fallo.getSender()+" ha sido expulsado de la sala de subastas");
 			} else{
 				System.out.println("Se ha producido un error en: "+fallo.getSender().getLocalName());
+				abrirFrame(subasta.getTituloLibro());
 				guiSubasta.addMensaje("Se ha producido un error en: "+fallo.getSender().getLocalName());
 			}
 		}
@@ -184,6 +207,7 @@ public class Vendedor extends Agent {
 						// Se le envia la informacion de las pujas a cada comprador
 						respuesta.setContent(getPujas(respuestas, mensaje.getSender()));
 						System.out.println(myAgent.getLocalName()+": "+mensaje.getSender().getLocalName()+" ha pujado");
+						abrirFrame(subasta.getTituloLibro());
 						guiSubasta.addMensaje(mensaje.getSender().getLocalName()+" ha pujado");
 
 						if(nPujas == 0) subasta.setGanador(mensaje.getSender());
@@ -236,6 +260,7 @@ public class Vendedor extends Agent {
 		public void onTick(){
 			if(!subasta.terminada()){	
 				System.out.println(myAgent.getLocalName()+": NUEVA PUJA\t-\tNUEVO PRECIO: "+subasta.getPrecioActual());	
+				abrirFrame(subasta.getTituloLibro());
 				guiSubasta.addMensaje("NUEVA PUJA\t-\tNUEVO PRECIO: "+subasta.getPrecioActual());				
 				Vendedor.this.nuevaPuja(subasta);								// Se realiza una nueva puja
 				Vendedor.this.buscarCompradores(subasta);						// Comprueba si han entrado nuevos compradores que participaran
