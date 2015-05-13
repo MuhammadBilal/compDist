@@ -28,9 +28,7 @@ public class Vendedor extends Agent {
 		gui.setTitle("Vendedor: "+getLocalName());
 		gui.setVisible(true);
 
-		//nuevaSubasta("Macbeth", 20, 3);
-
-	} // END SETUP
+	} 
 
 	protected void takeDown(){
 		System.out.println(getLocalName()+": No mas subastas por hoy");
@@ -152,16 +150,6 @@ public class Vendedor extends Agent {
 			super(agente, cfp);
 			this.subasta = subasta;
 			this.guiSubasta = Vendedor.this.frames.get(subasta.getTituloLibro());
-		}
-
-		// Maneja las propuestas de los clientes - PROPOSE
-		protected void handlePropose(ACLMessage propuesta, Vector aceptadas){
-			/*
-			if(aceptadas.size() == 1){									// Solo ha pujado un cliente en esta ronda - el primero
-				int puja = Integer.parseInt(propuesta.getContent());
-				if(puja)
-				subasta.setGanador(propuesta.getSender());				// Obtiene el AID del primer pujador y lo declara como ganador de la ronda
-			}*/
 		}
 
 		// Maneja las respuestas de fallo	- FAILURE

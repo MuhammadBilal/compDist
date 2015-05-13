@@ -18,6 +18,7 @@ public class Comprador extends Agent {
 	public ArrayList<String> subastas;
 	public HashMap<String, GUISubasta> frames;
 	private GUIComprador gui;
+	private DFAgentDescription descripcion;
 
 	protected void setup() {
 		gui = new GUIComprador(this);
@@ -25,6 +26,15 @@ public class Comprador extends Agent {
 		gui.setVisible(true);
 
 		frames = new HashMap();
+
+		descripcion = new DFAgentDescription();
+		descripcion.addLanguages("Español");
+
+		try{
+			DFService.register(this, descripcion);
+		}catch(FIPAException e){
+			e.printStackTrace();
+		}
 
 		this.subastas = new ArrayList();		
 	}
@@ -40,21 +50,20 @@ public class Comprador extends Agent {
 		GUISubasta guiSubasta = new GUISubasta(this, subasta);
 		guiSubasta.setVisible(true);
 		frames.put(libro, guiSubasta);
+		subastas.add(libro);
 
 		ServiceDescription servicio = new ServiceDescription();
 		servicio.setType(libro);
 		servicio.setName("Subasta "+libro);
 
-		DFAgentDescription descripcion = new DFAgentDescription();
-		descripcion.addLanguages("Español");
 		descripcion.addServices(servicio);
 
-		try {																
-			DFService.register(this, descripcion);								// Registra el servicio
-			subastas.add(libro);
+		try{
+			DFService.modify(this, descripcion);
 		}catch(FIPAException e){
 			e.printStackTrace();
 		}
+
 
 		MessageTemplate plantilla = ContractNetResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_CONTRACT_NET);
 
@@ -64,7 +73,17 @@ public class Comprador extends Agent {
 	}
 
 	private void finalizadaSubasta(Subasta subasta){
+		ServiceDescription servicio = new ServiceDescription();
+		servicio.setType(subasta.getTituloLibro());
+		servicio.setName("Subasta "+subasta.getTituloLibro());
 
+		descripcion.removeServices(servicio);
+
+		try{
+			DFService.modify(this, descripcion);
+		}catch(FIPAException e){
+			e.printStackTrace();
+		}
 	}
 
 	// COMPORTAMIENTOS ==========================================================
